@@ -18,42 +18,22 @@
     10. Salir
 *****************************************************/
 
-
-
-int f1(int *a, int b,int (*foo)(int,int)) {
-	*a = *a * 2;
-	*a = foo(*a,b);
-	return (*a);
-}
-
-int f2(int a, int b) {
-	 a = b*b;
-	 return a;
-}
-
-
-enum colors {lets,find,course};
 int main()
 {
-	printf("%d %d %d",course,lets,find);
-	return 0;
-}
-
-
-/*
-int main()
-{
-    int option = 0;
+    int option = 1;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
+
     do{
         switch(option)
         {
             case 1:
-                controller_loadFromText("data.csv",listaEmpleados);
+                if(controller_loadFromText("data.csv",listaEmpleados)==0)
+                	{printf("controller ok\n");
+                option = 10;}
                 break;
         }
     }while(option != 10);
     return 0;
-}*/
+}
 

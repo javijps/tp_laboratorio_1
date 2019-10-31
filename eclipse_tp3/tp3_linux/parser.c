@@ -25,24 +25,27 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	{
 		while(!feof(pFile))
 		{
-			printf("Leyo ok\n");
 			fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bId,bName,bHoras,bSueldo);
 			if(flagCabecera==0)
 			{
 				flagCabecera=1;
 				continue;
 			}
-			bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
-			//calcular id cuando guardo con maximo despues
-			if(bEmpleado!=NULL)
-			{
-				ll_add(pArrayListEmployee,bEmpleado);
-				retorno = 0;
-			}
 			else
 			{
-				retorno = -1;
-				break;
+				bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
+
+				if(bEmpleado!=NULL)
+				{
+					ll_add(pArrayListEmployee,bEmpleado);
+					retorno = 0;
+
+				}
+				else
+				{
+					retorno = -1;
+					break;
+				}
 			}
 		}
 	}
@@ -58,6 +61,9 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
+	int retorno = -1;
+	pFile = fopen("data.csv","b");
 
-    return 1;
+
+    return retorno;
 }
