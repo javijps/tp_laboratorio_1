@@ -21,7 +21,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	int flagCabecera=0;
 	Employee* bEmpleado;
 
-
 	if(pFile!=NULL)
 	{
 		while(!feof(pFile))
@@ -33,7 +32,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 				flagCabecera=1;
 				continue;
 			}
-			//bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
+			bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
 			//calcular id cuando guardo con maximo despues
 			if(bEmpleado!=NULL)
 			{
