@@ -13,33 +13,31 @@
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
-	pFile = fopen("data.csv","r");
 	char bId[1046];
 	char bName[1046];
 	char bHoras[1046];
 	char bSueldo[1046];
 	int flagCabecera=0;
 	Employee* bEmpleado;
+	int rd;
 
 	if(pFile!=NULL)
 	{
 		while(!feof(pFile))
 		{
-			fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bId,bName,bHoras,bSueldo);
+			rd = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bId,bName,bHoras,bSueldo);
 			if(flagCabecera==0)
 			{
 				flagCabecera=1;
 				continue;
 			}
-			else
+			else if(flagCabecera!=0 && rd==4)
 			{
 				bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
-
 				if(bEmpleado!=NULL)
 				{
-					ll_add(pArrayListEmployee,bEmpleado);
+					ll_add(pArrayListEmployee,bEmpleado);//agregar if?
 					retorno = 0;
-
 				}
 				else
 				{
@@ -49,6 +47,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 			}
 		}
 	}
+	fclose(pFile);
 	return retorno;
 }
 
@@ -62,8 +61,38 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
-	pFile = fopen("data.csv","b");
+	Employee* bEmpleado;
+	int rd;
+	int flagCabecera = 0;
 
-
-    return retorno;
+	if(pFile!=NULL)
+	{
+		bEmpleado =  employee_new();
+		if(bEmpleado!=NULL)
+		{
+			while(!feof(pFile))
+			{
+				rd = fread(bEmpleado,sizeof(Employee),1,pFile);
+				if(flagCabecera==0)
+				{
+					flagCabecera=1;
+					continue;
+				}
+				else
+				{
+					if(flagCabecera==1 && rd==1)
+					{
+						if(ll_add(pArrayListEmployee,bEmpleado)==0)//chequear retorno de add
+							retorno = 0;
+					}
+					else
+						employee_delete(bEmpleado);
+					break;
+				}
+			}
+		}
+	}
+	else
+		printf("error de lectura");
+	return retorno;
 }

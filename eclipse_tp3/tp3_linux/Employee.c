@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Employee.h"
-#include "utn.h"
 
 static int isValidNombre(char* nombre)//CARGAR UTN.H
 {
@@ -167,13 +166,7 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 		}
 	}
 	return retorno;
-
 }
-
-
-
-
-
 
 
 
@@ -181,16 +174,18 @@ void emp_printAemployee(Employee* employee)
 {
 	if(employee!=NULL)
 	{
-		printf("ID: %d\n"
+		printf("\nID: %d\n"
 				"Nombre: %s\n"
 				"Horas trabajadas: %d\n"
-				"Sueldo: %d",
+				"Sueldo: %d\n",
 				employee->id,
 				employee->nombre,
 				employee->horasTrabajadas,
 				employee->sueldo);
 	}
 }
+
+
 
 void emp_printEmployees(Employee* aEmployee,int len)
 {
@@ -200,14 +195,114 @@ void emp_printEmployees(Employee* aEmployee,int len)
 	{
 		for(i=0;i<len;i++)
 		{
-		printf("ID: %d\n"
-				"Nombre: %s\n"
-				"Horas trabajadas: %d\n"
-				"Sueldo: %d",
-				aEmployee[i].id,
-				aEmployee[i].nombre,
-				aEmployee[i].horasTrabajadas,
-				aEmployee[i].sueldo);
+			printf("ID: %d\n"
+					"Nombre: %s\n"
+					"Horas trabajadas: %d\n"
+					"Sueldo: %d",
+					aEmployee[i].id,
+					aEmployee[i].nombre,
+					aEmployee[i].horasTrabajadas,
+					aEmployee[i].sueldo);
 		}
 	}
+}
+
+/*
+int generarIdEmployee(LinkedList* pArrayList,bufferId)//llama a buscarIdMaximo. devuelve el id
+{
+	int retorno = 0;
+	int i;
+
+	if(pArrayList!=NULL)
+	{
+		ll_sort(pArrayList,*empl_buscarMaximoId())
+	}
+	return retorno;
+}
+
+
+*/
+
+int employee_buscarEmployee(LinkedList* pArrayListEmployee,Employee* empleado)
+{//chequear logica index
+
+	int index;
+	int retorno;
+	if(pArrayListEmployee!=NULL)
+	{
+		index = ll_contains(pArrayListEmployee,empleado);
+		if(index==0)//chequea logica
+			retorno = 0;
+		else
+			printf("El empleado ya existe!\n");
+	}
+	return retorno;
+}
+
+
+
+
+/**
+ * \brief Solicita los datos correspondientes a una cliente.
+ * \param sCliente *acliente puntero a una xxxxx de la estructura cliente.
+ * \param cantidad Cantidad de clientes.
+ * \return Si tuvo exito al completar todos los campos devuelve [0] o si fallo [-1]
+ */
+Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)//
+{
+	Employee* retorno = NULL;
+	char bId[1046]="1000";
+	char bName[1046];
+	char bHoras[1046];
+	char bSueldo[1046];
+	int option;
+	Employee* bEmployee;
+
+	if(pArrayListEmployee!=NULL)
+	{
+		do
+		{
+			//ASI ESTOY VALIDANDO 2 VECES, ACA Y EN EL ISVALID DEL SET.
+			if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)//ACA IRIAN LOS SET?
+			{
+				printf("No fue posible agregar el nombre\n");
+				retorno=NULL;
+				break;
+			}
+			if(getString(bHoras,"Ingrese cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
+			{
+				printf("No fue posible agregar las hs trabajadas!\n");
+				retorno=NULL;
+				break;
+			}
+			if(getString(bSueldo,"Ingrese sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
+			{
+				printf("No fue posible agregar el sueldo del empleado!\n");
+				retorno=NULL;
+				break;
+			}
+			//int generarIdEmployee(linkedlist)llama a buscarIdMaximo
+			bEmployee = employee_newParametros(bId,bName,bHoras,bSueldo);
+			if(bEmployee!=NULL)
+			{
+				printf("bemplo ok\n");
+//				if(/*employee_buscarEmployee(pArrayListEmployee,bEmployee)!=0*/)
+//				{
+//					retorno = bEmployee;
+//					printf("busco ok ok");
+////				}
+//				else
+//				{
+//					printf("Error al cargar el empleado!\n");
+//					break;
+//				}
+									retorno = bEmployee;
+									printf("busco ok ok");
+			}
+			if(getInt(&option,"1-Ingresar otro empleado\n2-Salir\n",
+					"Opcion incorrecta!\n",1,2,2)!=0)
+				break;
+		}while(option==1);
+	}
+	return retorno;
 }

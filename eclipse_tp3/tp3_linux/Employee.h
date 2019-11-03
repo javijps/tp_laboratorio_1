@@ -1,4 +1,8 @@
 #ifndef employee_H_INCLUDED
+
+#include "LinkedList.h"
+#include "utn.h"
+
 #define employee_H_INCLUDED
 typedef struct
 {
@@ -25,5 +29,10 @@ int employee_setSueldo(Employee* this,int sueldo);
 int employee_getSueldo(Employee* this,int* sueldo);
 
 void emp_printAemployee(Employee* employee);
+
+//int buscarIdMaximo()
+//int generarIdEmployee(llama a buscarIdMaximo)
+int employee_buscarEmployee(LinkedList* pArrayListEmployee,Employee* empleado);
+Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee);//
 
 #endif // employee_H_INCLUDED
