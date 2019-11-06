@@ -39,21 +39,24 @@ int main()
     	{
     	case 1:
     		if(controller_loadFromText("data.csv",listaEmpleados)==0)
-    			printf("controller ok\n");
+    			printf("Archivo cargado!\n");
     		else
-    			printf("no funciona\n");
+    			printf("No fue posible cargar el archivo\n");
     		break;
-    	case 2://mal
+    	case 2:
     		if(controller_loadFromBinary("data.csv",listaEmpleados)==0)
-    			printf("controller ok\n");
+    			printf("Archivo cargado!\n");
     		else
-    			printf("noa nda\n");
+    			printf("No fue posible cargar el archivo\n");
     		break;
     	case 3:
     		if(controller_addEmployee(listaEmpleados)==0)
-    			printf("controller ok\n");
+    			printf("Empleado creado correctamente!\n");
     		else
-    			printf("controller not ok\n");
+    			printf("No fue posible crear el empleado!\n");
+    		break;
+    	case 6:
+    		controller_ListEmployee(listaEmpleados);
     		break;
     	case 8:
     		break;

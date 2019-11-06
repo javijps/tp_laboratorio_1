@@ -11,20 +11,20 @@
  * \return int
  *
  */
-int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
+int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)//MENSAJE ACA EN LUGAR DEL MAIN?
 {
 	int retorno = -1;
 	FILE* pFile;
 	pFile = fopen(path,"r");
 
-	if(pFile!=NULL && parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
+	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
 	{
 		retorno = 0;
-		printf("\nok controller\n");
+		fclose(pFile);
 	}
 	else
 		printf("error controller\n");
-   return retorno;
+	return retorno;
 }
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo binario).
@@ -40,14 +40,13 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	FILE* pFile;
 	pFile = fopen(path,"rb");//AGREGAR IF SI NO SE PUDO ABRIR
 
-	if(pFile!=NULL && parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
+	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
 	{
 		retorno = 0;
-		printf("\nok controller\n");
+		fclose(pFile);
 	}
 	else
 		printf("error controller\n");
-	fclose(pFile);
     return retorno;
 }
 /** \brief Alta de empleados
@@ -106,7 +105,25 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno=-1;
+	int i;
+	int lenLL;
+	Employee* bEmpleado;
+
+	lenLL = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenLL>0)
+	{
+		for(i=0;i<lenLL;i++)
+		{
+			bEmpleado = ll_get(pArrayListEmployee,i);
+			printf("ID: %d     Employee: %15s     Horas trabajadas %d     Sueldo: %d\n",
+					bEmpleado->id,bEmpleado->nombre,bEmpleado->horasTrabajadas,bEmpleado->sueldo);
+			retorno = 0;
+		}
+	}
+	else
+		printf("No fue posible imprimir la informacion!\n");
+    return retorno;
 }
 
 /** \brief Ordenar empleados

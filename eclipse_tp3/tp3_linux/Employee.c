@@ -226,12 +226,11 @@ int generarIdEmployee(LinkedList* pArrayList,bufferId)//llama a buscarIdMaximo. 
 int employee_buscarEmployee(LinkedList* pArrayListEmployee,Employee* empleado)
 {//chequear logica index
 
-	int index;
 	int retorno;
 	if(pArrayListEmployee!=NULL)
 	{
-		index = ll_contains(pArrayListEmployee,empleado);
-		if(index==0)//chequea logica
+
+		if(ll_contains(pArrayListEmployee,empleado)==0)
 			retorno = 0;
 		else
 			printf("El empleado ya existe!\n");
@@ -263,7 +262,7 @@ Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)//
 		do
 		{
 			//ASI ESTOY VALIDANDO 2 VECES, ACA Y EN EL ISVALID DEL SET.
-			if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)//ACA IRIAN LOS SET?
+			if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)
 			{
 				printf("No fue posible agregar el nombre\n");
 				retorno=NULL;
@@ -285,24 +284,85 @@ Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)//
 			bEmployee = employee_newParametros(bId,bName,bHoras,bSueldo);
 			if(bEmployee!=NULL)
 			{
-				printf("bemplo ok\n");
-//				if(/*employee_buscarEmployee(pArrayListEmployee,bEmployee)!=0*/)
+//				printf("bemplo ok\n");
+//				if(employee_buscarEmployee(pArrayListEmployee,bEmployee)!=0)
 //				{
 //					retorno = bEmployee;
 //					printf("busco ok ok");
-////				}
+//				}
 //				else
 //				{
 //					printf("Error al cargar el empleado!\n");
 //					break;
 //				}
 									retorno = bEmployee;
-									printf("busco ok ok");
 			}
-			if(getInt(&option,"1-Ingresar otro empleado\n2-Salir\n",
+			if(getInt(&option,"\n1-Ingresar otro empleado\n2-Salir\n",
 					"Opcion incorrecta!\n",1,2,2)!=0)
 				break;
 		}while(option==1);
 	}
 	return retorno;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*NOTAS LL
+ * CASO NODO NUEVO EN 1ER ELEMENTO
+ * CREAR NODO, DEVUELVE P*
+ * FIRST NODE == PROXIMO DE NODO NUEVO
+ * LISTA FIRST NODE == P*NUEVO NODO
+ * SIZE++
+ *
+ *AGREGAR EN SIZE ES DECIR LO MISMO Q ULTIMO
+ *SIZE-1 ES EL ULTIMO
+ *
+ *
+ *hay 2 casos, agregar al principio cambio primernode en struct ll
+ *agregar en medio de 2(agregar al final es un caso particular de agregar en medio).pido anterior.
+ *
+ *
+ *get node. tomo recorro de uno en uno.pasa x todos.
+ *get node node index >=0 && node index<size
+ *size++
+ *ll ad ,es  llamar add node
+ *ll get es llam
+ *ll clear es remove repetido
+ *ll delete es remove y free
+ *ll
+ *hacer remove node
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

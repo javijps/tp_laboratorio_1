@@ -21,7 +21,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	Employee* bEmpleado;
 	int rd;
 
-	if(pFile!=NULL)
+	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
 		while(!feof(pFile))
 		{
@@ -47,7 +47,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 			}
 		}
 	}
-	fclose(pFile);
 	return retorno;
 }
 
@@ -65,7 +64,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	int rd;
 	int flagCabecera = 0;
 
-	if(pFile!=NULL)
+	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
 		bEmpleado =  employee_new();
 		if(bEmpleado!=NULL)
