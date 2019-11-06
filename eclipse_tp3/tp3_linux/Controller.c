@@ -119,8 +119,23 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno=-1;
+
+	if(pArrayListEmployee!=NULL &&
+			ll_len(pArrayListEmployee)>0)
+	{
+		if(employee_deleteEmployee(pArrayListEmployee)==0)
+		{
+			retorno=0;
+		}
+	}
+	else
+	{
+		printf("No existen datos cargados a editar!\n");
+	}
+	return retorno;
 }
+
 
 /** \brief Listar empleados
  *
@@ -161,7 +176,21 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno=-1;
+	int lenLL;
+
+	lenLL = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenLL>0)
+	{
+		ll_sort(pArrayListEmployee,emp_sortEmployeById,1);
+		printf("Empleados ordenados!!\n");
+		retorno = 0;
+	}
+	else
+	{
+		printf("No existen datos cargados a editar!\n");
+	}
+	    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -173,7 +202,31 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	FILE* pFile;
+	int lenLL;
+	int wt;
+	pFile = fopen(path,"a");
+
+	lenLL = ll_len(pArrayListEmployee);
+	printf("Largo lenLL %d\n",lenLL);
+	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
+	{
+		wt = fwrite(pArrayListEmployee,sizeof(Employee),lenLL,pFile);
+		if(wt==lenLL)
+		{
+			printf("Archivo cargado!\n");
+			retorno = 0;
+		}
+		else
+		{
+			printf("Error al cargar los datos!\n");
+		}
+		fclose(pFile);
+	}
+	else
+		printf("No fue posible guardar los datos en el archivo\n");
+	return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).

@@ -256,7 +256,7 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
  */
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)
 {
-	char bId[1046]="1000";
+	char bId[1046]="0";
 	char bName[1046];
 	char bHoras[1046];
 	char bSueldo[1046];
@@ -390,11 +390,68 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 }
 
 
+int employee_deleteEmployee(LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;
+	Employee* bEmpleado = NULL;
+	int indexEmpleado;
+	int bId;
+	int option;
 
+	if(pArrayListEmployee!=NULL)
+	{
+		controller_ListEmployee(pArrayListEmployee);
+		//getID
+		if(getInt(&bId,"Ingrese ID del Empleado a eliminar\n","Error Id invalido!\n",1,10000,2)==0)
+		{
+			bEmpleado = employee_new();
+			if(getInt(&option,"\nConfirma que desea borrar este empleado?\n"
+					"1-Confirmar eliminacion\n"
+					"2-Desechar operacion\n","Error, opcion invalida",1,3,2)==0
+					           && option==1)
+			{
+				bEmpleado = emp_findEmployeeById(pArrayListEmployee,bId);
+				indexEmpleado = ll_indexOf(pArrayListEmployee,bEmpleado);
+				ll_remove(pArrayListEmployee,indexEmpleado);
+				retorno = 0;
+				printf("El empleado ha sido eliminado!\n");
+			}
+			else
+				printf("Operacion cancelada!\n");
+			employee_delete(bEmpleado);
+		}
+	}
+	return retorno;
+}
 
+int emp_sortEmployeById(void* a,void* b)
+{
+	int retorno=0;
+	int id_a = ((Employee*)a)->id;
+	int id_b = ((Employee*)b)->id;
 
+	if(id_a > id_b)
+	{
+		retorno = 1;
+	}
+	else if(id_a < id_b)
+	{
+		retorno = -1;
+	}
+	return retorno;
+}
 
-
+int emp_sortEmployeByName(void* a,void* b)
+{
+	if(strncpy(((Employee*)a)->nombre,((Employee*)b)->nombre,126)>0)
+	{
+		return 1;
+	}
+	if(strncpy(((Employee*)a)->nombre,((Employee*)b)->nombre,126)<0)	{
+		return -1;
+	}
+	return 0;
+}
 
 
 

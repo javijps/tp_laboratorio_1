@@ -48,15 +48,20 @@ int main()//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHE
     	case 4://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO?
     		controller_editEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT
     		break;
-    	case 5:
+    	case 5://CHEQUEAR VALIDACIONES DE INPUTS.
     		controller_removeEmployee(listaEmpleados);
     		break;
     	case 6:
     		controller_ListEmployee(listaEmpleados);
     		break;
-    	case 8:
+    	case 7:
+    		controller_sortEmployee(listaEmpleados);//revisar si ordena bien por id, despues de hacer el maximo
     		break;
-    	case 9:
+    	case 8://este tal vez necesita flag
+    		controller_saveAsText("data2.csv",listaEmpleados);
+    		break;
+    	case 9://este tal vez necesita flag
+//    		controller_saveAsBinary(listaEmpleados);//RESOLVER PUNTO 2
     		break;
     	}
     }while(option!=10);

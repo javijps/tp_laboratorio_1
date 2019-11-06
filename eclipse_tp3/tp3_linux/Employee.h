@@ -38,6 +38,8 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee);
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee);//
 Employee* employee_EditEmployee(LinkedList* pArrayListEmployee);
 Employee* emp_subMenuEditEmployee(Employee* bEmpleado);
-
+int employee_deleteEmployee(LinkedList* pArrayListEmployee);
+int emp_sortEmployeById(void* a,void* b);
+int emp_sortEmployeByName(void* a,void* b);
 
 #endif // employee_H_INCLUDED
