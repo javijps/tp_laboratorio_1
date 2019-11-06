@@ -67,14 +67,19 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 	{
 		do
 		{
+			pEmployee = employee_new();
 			pEmployee = employee_getDatosEmployee(pArrayListEmployee);
 			if(pEmployee!=NULL && ll_add(pArrayListEmployee,pEmployee)==0)//chequear retorno de add
 			{
 				retorno = 0;
 				printf("Empleado creado correctamente!\n");
+				emp_printAemployee(pEmployee);
 			}
 			else
+			{
 				printf("No fue posible agregar el empleado!\n");
+				employee_delete(pEmployee);
+			}
 			if(getInt(&option,"\n1-Ingresar otro empleado\n2-Salir\n",
 					"Opcion incorrecta!\n",1,2,2)!=0)
 				break;

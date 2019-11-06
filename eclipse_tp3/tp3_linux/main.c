@@ -20,8 +20,7 @@
 *****************************************************/
 
 int main()//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
-{
-    int option;
+{	int option;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{//PONERLE IF AL GETINT
@@ -48,6 +47,9 @@ int main()//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHE
     		break;
     	case 4://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO?
     		controller_editEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT
+    		break;
+    	case 5:
+    		controller_removeEmployee(listaEmpleados);
     		break;
     	case 6:
     		controller_ListEmployee(listaEmpleados);
