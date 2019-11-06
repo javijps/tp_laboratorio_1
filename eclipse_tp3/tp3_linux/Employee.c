@@ -23,6 +23,7 @@ static int isValsueldo(int sueldo)//CARGAR UTN.H
 	return 1;
 }
 
+
 Employee* employee_new()
 {
 	return malloc(sizeof(Employee));
@@ -169,7 +170,6 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 }
 
 
-
 void emp_printAemployee(Employee* employee)
 {
 	if(employee!=NULL)
@@ -184,8 +184,6 @@ void emp_printAemployee(Employee* employee)
 				employee->sueldo);
 	}
 }
-
-
 
 void emp_printEmployees(Employee* aEmployee,int len)
 {
@@ -207,6 +205,7 @@ void emp_printEmployees(Employee* aEmployee,int len)
 	}
 }
 
+
 /*
 int generarIdEmployee(LinkedList* pArrayList,bufferId)//llama a buscarIdMaximo. devuelve el id
 {
@@ -223,19 +222,27 @@ int generarIdEmployee(LinkedList* pArrayList,bufferId)//llama a buscarIdMaximo. 
 
 */
 
-int employee_buscarEmployee(LinkedList* pArrayListEmployee,Employee* empleado)
-{//chequear logica index
+Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
+{
+	int lenLlARray;
+	int i;
+	Employee* bEmployee = NULL;
 
-	int retorno;
-	if(pArrayListEmployee!=NULL)
+	lenLlARray = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenLlARray>0 && idEmployee>0)
 	{
-
-		if(ll_contains(pArrayListEmployee,empleado)==0)
-			retorno = 0;
-		else
-			printf("El empleado ya existe!\n");
+		for(i=0;i<lenLlARray;i++)
+		{
+			bEmployee = ll_get(pArrayListEmployee,i);
+			if(bEmployee->id == idEmployee)
+			{
+				emp_printAemployee(bEmployee);
+				return bEmployee;
+				break;//es necesario?
+			}
+		}
 	}
-	return retorno;
+	return bEmployee;
 }
 
 
@@ -254,59 +261,123 @@ Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)//
 	char bName[1046];
 	char bHoras[1046];
 	char bSueldo[1046];
-	int option;
 	Employee* bEmployee;
 
 	if(pArrayListEmployee!=NULL)
 	{
-		do
+		//ASI ESTOY VALIDANDO 2 VECES, ACA Y EN EL ISVALID DEL SET.
+		if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)
 		{
-			//ASI ESTOY VALIDANDO 2 VECES, ACA Y EN EL ISVALID DEL SET.
-			if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)
-			{
-				printf("No fue posible agregar el nombre\n");
-				retorno=NULL;
-				break;
-			}
-			if(getString(bHoras,"Ingrese cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
-			{
-				printf("No fue posible agregar las hs trabajadas!\n");
-				retorno=NULL;
-				break;
-			}
-			if(getString(bSueldo,"Ingrese sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
-			{
-				printf("No fue posible agregar el sueldo del empleado!\n");
-				retorno=NULL;
-				break;
-			}
-			//int generarIdEmployee(linkedlist)llama a buscarIdMaximo
-			bEmployee = employee_newParametros(bId,bName,bHoras,bSueldo);
-			if(bEmployee!=NULL)
-			{
-//				printf("bemplo ok\n");
-//				if(employee_buscarEmployee(pArrayListEmployee,bEmployee)!=0)
-//				{
-//					retorno = bEmployee;
-//					printf("busco ok ok");
-//				}
-//				else
-//				{
-//					printf("Error al cargar el empleado!\n");
-//					break;
-//				}
-									retorno = bEmployee;
-			}
-			if(getInt(&option,"\n1-Ingresar otro empleado\n2-Salir\n",
-					"Opcion incorrecta!\n",1,2,2)!=0)
-				break;
-		}while(option==1);
+			printf("No fue posible agregar el nombre\n");
+			retorno=NULL;
+		}
+		if(getString(bHoras,"Ingrese cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
+		{
+			printf("No fue posible agregar las hs trabajadas!\n");
+			retorno=NULL;
+		}
+		if(getString(bSueldo,"Ingrese sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
+		{
+			printf("No fue posible agregar el sueldo del empleado!\n");
+			retorno=NULL;
+		}
+		//int generarIdEmployee(linkedlist)llama a buscarIdMaximo
+		bEmployee = employee_newParametros(bId,bName,bHoras,bSueldo);
+		if(bEmployee!=NULL)
+		{
+			//				printf("bemplo ok\n");
+			//				if(employee_buscarEmployee(pArrayListEmployee,bEmployee)!=0)
+			//				{
+			//					retorno = bEmployee;
+			//					printf("busco ok ok");
+			//				}
+			//				else
+			//				{
+			//					printf("Error al cargar el empleado!\n");
+			//					break;
+			//				}
+			retorno = bEmployee;
+		}
 	}
 	return retorno;
 }
 
+Employee* employee_EditEmployee(LinkedList* pArrayListEmployee)
+{
+	Employee* bEmpleado = NULL;
+	int indexEmpleado;
+	int bId;
+
+	if(pArrayListEmployee!=NULL)
+	{
+		controller_ListEmployee(pArrayListEmployee);
+		//getID
+		if(getInt(&bId,"Ingrese ID del Empleado a modificar\n","Error Id invalido!\n",1,10000,2)==0)
+		{
+			bEmpleado = emp_findEmployeeById(pArrayListEmployee,bId);
+			indexEmpleado = ll_indexOf(pArrayListEmployee,bEmpleado);
+			if(emp_subMenuEditEmployee(bEmpleado)!=NULL)
+			{
+				ll_set(pArrayListEmployee,indexEmpleado,bEmpleado);
+				emp_printAemployee(bEmpleado);
+				printf("Modificacion Exitosa!");
+			}
+			else
+				printf("No fue posible cargar las modificaciones en el empleado seleccionado!\n");
+		}
+	}
+	return bEmpleado;
+}
+
+Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
+{
+	char bNombre[1046];
+	int bHoras;
+	int bSueldo;
+	int option;
 
 
+	   do{
+	    	if(getInt(&option,"\nIngrese opcion:\n1-Modificar Nombre del Empleado\n"
+	    			"2-Modificar Horas trabajadas del empleado\n\n"
+	    			"3-Modificar Sueldo del Empleado\n"
+	    			"4-EXIT\n",
+					"Error\n",1,4,2)==0)
+	    	{
+	    		switch(option)
+	    		{
+	    		case 1:
+	    			if(getNombre(bNombre,"Ingrese nuevo nombre del Empleado\n","Nombre Incorrecto\n",3)!=0)
+	    		{
+	    			printf("No fue posible modificar el nombre!\n");
+	    			bEmpleado=NULL;
+	    		}
+	    			else
+	    				strncpy(bEmpleado->nombre,bNombre,128);
+	    		break;
+	    		case 2:
+	    			if(getInt(&bHoras,"Ingrese nueva cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
+	    			{
+	    				printf("No fue posible agregar las hs trabajadas!\n");
+	    				bEmpleado=NULL;
+	    			}
+	    			else
+	    				bEmpleado->horasTrabajadas =bHoras;
+	    			break;
+	    		case 3:
+	    			if(getInt(&bSueldo,"Ingrese nuevo sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
+	    			{
+	    				printf("No fue posible modificar el sueldo del empleado!\n");
+	    				bEmpleado=NULL;
+	    			}
+	    			else
+	    				bEmpleado->sueldo =bSueldo;
+	    			break;
+	    		}
+	    	}
+	   }while(option!=4);
+	return bEmpleado;
+}
 
 
 

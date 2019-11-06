@@ -20,10 +20,11 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)//MENSAJ
 	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
 	{
 		retorno = 0;
+		printf("Archivo cargado!\n");
 		fclose(pFile);
 	}
 	else
-		printf("error controller\n");
+		printf("No fue posible cargar el archivo\n");
 	return retorno;
 }
 
@@ -43,11 +44,12 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
 	{
 		retorno = 0;
+		printf("Archivo cargado!\n");
 		fclose(pFile);
 	}
 	else
-		printf("error controller\n");
-    return retorno;
+		printf("No fue posible cargar el archivo\n");
+	return retorno;
 }
 /** \brief Alta de empleados
  *
@@ -59,15 +61,24 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
+	int option;
 	Employee* pEmployee;
 	if(pArrayListEmployee!=NULL)
 	{
-		pEmployee = employee_getDatosEmployee(pArrayListEmployee);
-		if(pEmployee!=NULL && ll_add(pArrayListEmployee,pEmployee)==0)//chequear retorno de add
-			retorno = 0;
-		else
-			printf("No fue posible agregar el empleado!\n");
-
+		do
+		{
+			pEmployee = employee_getDatosEmployee(pArrayListEmployee);
+			if(pEmployee!=NULL && ll_add(pArrayListEmployee,pEmployee)==0)//chequear retorno de add
+			{
+				retorno = 0;
+				printf("Empleado creado correctamente!\n");
+			}
+			else
+				printf("No fue posible agregar el empleado!\n");
+			if(getInt(&option,"\n1-Ingresar otro empleado\n2-Salir\n",
+					"Opcion incorrecta!\n",1,2,2)!=0)
+				break;
+		}while(option==1);
 	}
 	return retorno;
 }
@@ -81,7 +92,17 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno=-1;
+
+	if(pArrayListEmployee!=NULL && ll_len(pArrayListEmployee)>0 && employee_EditEmployee(pArrayListEmployee)!=NULL)
+	{
+		retorno=0;
+	}
+	else
+	{
+		printf("No existen datos cargados a editar!\n");
+	}
+	return retorno;
 }
 
 /** \brief Baja de empleado
@@ -116,7 +137,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 		for(i=0;i<lenLL;i++)
 		{
 			bEmpleado = ll_get(pArrayListEmployee,i);
-			printf("ID: %d     Employee: %15s     Horas trabajadas %d     Sueldo: %d\n",
+			printf("ID: %d     Employee: %15s     Horas trabajadas %6d     Sueldo: %8d\n",
 					bEmpleado->id,bEmpleado->nombre,bEmpleado->horasTrabajadas,bEmpleado->sueldo);
 			retorno = 0;
 		}

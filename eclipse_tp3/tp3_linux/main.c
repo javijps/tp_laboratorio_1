@@ -19,41 +19,35 @@
     10. Salir
 *****************************************************/
 
-int main()
+int main()//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
 {
     int option;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
-    do{
-    	getInt(&option,"ingrese opcion:\n1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
+    do{//PONERLE IF AL GETINT
+    	getInt(&option,"\nIngrese opcion:\n1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
     			"2-Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n"
     			"3-Alta empleado\n"
-    			"4-Modificar datos de empleado"
-    			"5-Baja de empleado"
-    			"6-Listar empleados"
-    			"7-Ordenar empleados"
+    			"4-Modificar datos de empleado\n"
+    			"5-Baja de empleado\n"
+    			"6-Listar empleados\n"
+    			"7-Ordenar empleados\n"
     			"8-Guardar los datos de los empleados en el archivo data.csv (modo texto)\n"
     			"9-Guardar los datos de los empleados en el archivo data.csv (modo binario)\n","Error\n",1,10,2);
 
-    	switch(option)
+    	switch(option)//AGREGAR TODOS LOS FLAG NECESARIOS.
     	{
-    	case 1:
-    		if(controller_loadFromText("data.csv",listaEmpleados)==0)
-    			printf("Archivo cargado!\n");
-    		else
-    			printf("No fue posible cargar el archivo\n");
+    	case 1://SI SE CARGO COMO BINARIO, NO PERMITIR CARGAR?
+    		controller_loadFromText("data.csv",listaEmpleados);//HACER VALIDACIONES DE LOS INPUR. GET NOMBRE NO FUNCIONA.
     		break;
-    	case 2:
-    		if(controller_loadFromBinary("data.csv",listaEmpleados)==0)
-    			printf("Archivo cargado!\n");
-    		else
-    			printf("No fue posible cargar el archivo\n");
+    	case 2://SI SE CARGO COMO TEXTO, NO PERMITIR CARGAR?
+    		controller_loadFromBinary("data.csv",listaEmpleados);//hacer de forma correcta el binario. ultimo
     		break;
-    	case 3:
-    		if(controller_addEmployee(listaEmpleados)==0)
-    			printf("Empleado creado correctamente!\n");
-    		else
-    			printf("No fue posible crear el empleado!\n");
+    	case 3://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO? HACER FUNCION GENERAR ID Y MAXIMO ID.
+    		controller_addEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT
+    		break;
+    	case 4://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO?
+    		controller_editEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT
     		break;
     	case 6:
     		controller_ListEmployee(listaEmpleados);

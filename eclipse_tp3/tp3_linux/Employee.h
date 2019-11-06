@@ -2,6 +2,7 @@
 
 #include "LinkedList.h"
 #include "utn.h"
+#include "Controller.h"
 
 #define employee_H_INCLUDED
 typedef struct
@@ -32,7 +33,11 @@ void emp_printAemployee(Employee* employee);
 
 //int buscarIdMaximo()
 //int generarIdEmployee(llama a buscarIdMaximo)
-int employee_buscarEmployee(LinkedList* pArrayListEmployee,Employee* empleado);
+Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee);
+
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee);//
+Employee* employee_EditEmployee(LinkedList* pArrayListEmployee);
+Employee* emp_subMenuEditEmployee(Employee* bEmpleado);
+
 
 #endif // employee_H_INCLUDED
