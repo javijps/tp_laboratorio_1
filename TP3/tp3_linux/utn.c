@@ -66,9 +66,11 @@ int getInt(   int *pNumero,
 int esInt(char *nInt)
 {
     int retorno=-1;
-    int i=0;
+    int i;
+    int lenString;
 
-    while(nInt[i]!='\0')
+    lenString = strlen(nInt);
+    for(i=0;i<lenString;i++)
     {
     	if(nInt[i]>='0' && nInt[i]<='9')
     	{
@@ -269,24 +271,29 @@ int esNombre(char *pNombre)
 {
 	int retorno = -1;
 	int i;
+	int lenString;
 
 	if(pNombre!=NULL)
-
-		for(i=0;pNombre[i]!='\0';i++)
+	{
+	    lenString = strlen(pNombre);
+	    for(i=0;i<lenString;i++)
 		{
 			if((pNombre[i] >= 'a' && pNombre[i] <= 'z') ||
 					(pNombre[i] >= 'A' && pNombre[i] <= 'Z') ||
 					(pNombre[i]== ' '))
 			{
+
 				retorno = 0;
 				i++;
 			}
 			else
 			{
+				printf("posicion i:%c",pNombre[i]);
 				printf("Error, los datos ingresados no corresponden a un nombre!!\n");
 				break;
 			}
 		}
+	}
 	return retorno;
 }
 

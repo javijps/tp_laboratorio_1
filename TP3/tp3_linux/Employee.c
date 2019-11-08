@@ -5,24 +5,62 @@
 
 static int isValidNombre(char* nombre)//CARGAR UTN.H
 {
-	return 1;
+	int retorno = -1;
+	int i;
+	int lenString;
+
+	if(nombre!=NULL)
+	{
+	    lenString = strlen(nombre);
+	    for(i=0;i<lenString;i++)
+		{
+			if((nombre[i] >= 'a' && nombre[i] <= 'z') ||
+					(nombre[i] >= 'A' && nombre[i] <= 'Z') ||
+					(nombre[i]== ' '))
+			{
+
+				retorno = 1;
+				i++;
+			}
+			else
+				break;
+		}
+	}
+	return retorno;
 }
 
 static int isValidId(int id)//CARGAR UTN.H
 {
-	return 1;
+	int retorno=-1;
+
+	if(id>=0)
+	{
+		retorno=1;
+	}
+	return retorno;
 }
 
 static int isValhorasTrabajadas(int horasTrabajadas)//CARGAR UTN.H
 {
-	return 1;
+	int retorno=-1;
+
+	if(horasTrabajadas>=1)
+	{
+		retorno=1;
+	}
+	return retorno;
 }
 
 static int isValsueldo(int sueldo)//CARGAR UTN.H
 {
-	return 1;
-}
+	int retorno=-1;
 
+	if(sueldo>=1)
+	{
+		retorno=1;
+	}
+	return retorno;
+}
 
 Employee* employee_new()
 {
