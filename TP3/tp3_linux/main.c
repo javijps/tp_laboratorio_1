@@ -53,7 +53,7 @@ int main()
 			switch(option)
 			{
 			case 1:
-				if(flagTexto==0 && controller_loadFromText("data.csv",listaEmpleados)==0)
+				if(flagBinario==0 && controller_loadFromText("data.csv",listaEmpleados)==0)
 					flagTexto =1;
 				else
 					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
@@ -83,8 +83,7 @@ int main()
 				controller_saveAsText("data.csv",listaEmpleados);
 				break;
 			case 9:
-				printf("entro 9");
-//				controller_saveAsBinary("data.csv",listaEmpleados);
+				controller_saveAsBinary("data.bin",listaEmpleados);
 				break;
 			case 10:
 				if(controller_exitMenu(listaEmpleados)==0)

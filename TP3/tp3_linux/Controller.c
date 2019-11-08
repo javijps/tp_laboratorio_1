@@ -49,7 +49,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	int retorno = -1;
 	FILE* pFile;
 
-	pFile = fopen(path,"rb");
+	pFile = fopen(path,"r+b");
 	if(pFile!=NULL)
 	{
 		if(pArrayListEmployee!=NULL &&
@@ -60,12 +60,16 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			printf("Archivo cargado!\n");
 		}
 	}
-	else if(fopen(path,"wb")!=NULL)
+	if(pFile==NULL)
 	{
-		printf("Archivo creado!\n");
+		pFile = fopen(path,"wb");
+		if(pFile!=NULL)
+		{
+			printf("Archivo creado!\n");
+		}
+		else
+			printf("NO fue posible abrir el archivo!\n");
 	}
-	else
-		printf("Archivo inexistente!\nNo hay memoria para crear el archivo!\n");
 	fclose(pFile);
 	return retorno;
 }
@@ -263,9 +267,36 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-	return 1;
-}
+	int retorno = -1;
+	FILE* pFile;
+	int lenLL;
+	int i;
+	Employee* bEmpleado;
 
+	pFile = fopen(path,"rb");
+	lenLL = ll_len(pArrayListEmployee);
+
+	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
+	{
+		pFile = fopen(path,"wb");
+		for(i=0;i<lenLL;i++)
+		{
+			bEmpleado = ll_get(pArrayListEmployee,i);
+			if(bEmpleado!=NULL)
+			{
+				fwrite(bEmpleado,sizeof(Employee),1,pFile);
+				retorno = 0;
+			}
+			else
+				break;
+			printf("Informacion guardada!\n");
+		}
+	}
+	else
+		printf("No fue posible guardar la informacion!\nArchivo Inexistente!\n");
+	fclose(pFile);
+	return retorno;
+}
 /** \brief Elimina.
  *
  * \param path char*

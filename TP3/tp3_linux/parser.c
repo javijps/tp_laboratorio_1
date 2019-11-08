@@ -60,36 +60,25 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	Employee* bEmpleado;
-	int rd;
-	int flagCabecera = 0;
 
 	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
-		bEmpleado =  employee_new();
-		if(bEmpleado!=NULL)
+		while(!feof(pFile))
 		{
-			while(!feof(pFile))
+			bEmpleado = employee_new();
+			fread(bEmpleado,sizeof(Employee),1,pFile);
+			if(bEmpleado!=NULL)
 			{
-				rd = fread(bEmpleado,sizeof(Employee),1,pFile);
-				if(flagCabecera==0)
-				{
-					flagCabecera=1;
-					continue;
-				}
-				else
-				{
-					if(flagCabecera==1 && rd==1 && ll_add(pArrayListEmployee,bEmpleado)==0)
-					{
-						retorno = 0;
-					}
-					else
-						employee_delete(bEmpleado);
-					break;
-				}
+				ll_add(pArrayListEmployee,bEmpleado);
+				retorno = 0;
+			}
+			else
+			{
+				retorno = -1;
+				break;
 			}
 		}
-	}
-	else
+	}else
 		printf("error de lectura");
 	return retorno;
 }
