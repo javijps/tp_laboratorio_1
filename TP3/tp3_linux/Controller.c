@@ -224,21 +224,36 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 	int retorno = -1;
 	FILE* pFile;
 	int lenLL;
-	int wt;
-	pFile = fopen(path,"a");
+	int i;
+	Employee* bEmpleado;
 
+	pFile = fopen(path,"w");
 	lenLL = ll_len(pArrayListEmployee);
-	printf("Largo lenLL %d\n",lenLL);
 	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
 	{
-
-		fclose(pFile);
+		fprintf(pFile,"Id,Nombre,HorasTrabajadas,Sueldo\n");
+		for(i=0;i<lenLL;i++)
+		{
+			bEmpleado = ll_get(pArrayListEmployee,i);
+			if(bEmpleado!=NULL)
+			{
+				fprintf(pFile,"%d,%s,%d,%d\n",
+						bEmpleado->id,
+						bEmpleado->nombre,
+						bEmpleado->horasTrabajadas,
+						bEmpleado->sueldo);
+				retorno = 0;
+			}
+			else
+				break;
+		}
+		printf("Informacion guardada!\n");
 	}
 	else
-		printf("No fue posible guardar los datos en el archivo\n");
+		printf("No fue posible guardar la informacion!\n");
+	fclose(pFile);
 	return retorno;
 }
-
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
  *
  * \param path char*
@@ -263,7 +278,7 @@ int controller_exitMenu(LinkedList* pArrayListEmployee)
 	int retorno = -1;;
 	int option;
 
-	getInt(&option,"Desea abandonar el programa?\nToda la informacion no grabada en archivo se perdera\n"
+	getInt(&option,"\nDesea abandonar el programa?\nToda la informacion no grabada en archivo se perdera\n"
 			"Ingrese\n"
 			"1-Confirmar\n"
 			"2-Continuar dentro del programa\n",

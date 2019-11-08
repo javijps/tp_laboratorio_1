@@ -23,18 +23,19 @@ int main()
 {
 	//deberia agregar system clear
 
-	//hacer WRITE TEXTO.
 	//PUNTO 7 //hacer submenu sort CON TODAS LAS OPCIONES. ACTUAL, ordena por nombre de forma descendente
+
+
 	//AGREGAR TODOS LOS FLAG NECESARIOS.(APERTURA DE ARCHIVOS Y ESCRITURA DE ARCHIVOS
 	//HACER TODA LA DOCUMENTACION!!!!
-
-	//Pedir y liberar memoria solo cuando creo y cuando borro, cuando uso buffer no?
 	//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
 	//CHEQUEAR LOS MENSAJES DE ERROr DE CADA FUNCION
 	//CHEQUEAR SI ES NECESARIO IMPORTAR EMPLOYEE EN EL MAIN
 
 
 	int option;
+	int flagTexto = 0;
+	int flagBinario = 0;
 	LinkedList* listaEmpleados = ll_newLinkedList();
 
 	do{
@@ -52,11 +53,16 @@ int main()
 			switch(option)
 			{
 			case 1:
-				controller_loadFromText("data.csv",listaEmpleados);
+				if(flagTexto==0 && controller_loadFromText("data.csv",listaEmpleados)==0)
+					flagTexto =1;
+				else
+					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
 				break;
 			case 2:
-//				controller_loadFromBinary("data.bin",listaEmpleados);
-				printf("entro 2");
+				if(flagTexto==0 && controller_loadFromBinary("data.bin",listaEmpleados)!=0)
+						flagBinario = 1;
+				else
+					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");
 				break;
 			case 3:
 				controller_addEmployee(listaEmpleados);
