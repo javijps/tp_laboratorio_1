@@ -66,6 +66,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 		if(pFile!=NULL)
 		{
 			printf("Archivo creado!\n");
+			retorno = 0;
 		}
 		else
 			printf("NO fue posible abrir el archivo!\n");
@@ -281,20 +282,23 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 		pFile = fopen(path,"wb");
 		for(i=0;i<lenLL;i++)
 		{
-			bEmpleado = ll_get(pArrayListEmployee,i);
+			bEmpleado = employee_new();
 			if(bEmpleado!=NULL)
 			{
+				bEmpleado = ll_get(pArrayListEmployee,i);
+				printf("len %d",lenLL);
 				fwrite(bEmpleado,sizeof(Employee),1,pFile);
 				retorno = 0;
+				emp_printAemployee(bEmpleado);
 			}
 			else
 				break;
 			printf("Informacion guardada!\n");
 		}
+		fclose(pFile);
 	}
 	else
 		printf("No fue posible guardar la informacion!\nArchivo Inexistente!\n");
-	fclose(pFile);
 	return retorno;
 }
 /** \brief Elimina.

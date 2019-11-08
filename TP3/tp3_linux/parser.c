@@ -60,22 +60,19 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	Employee* bEmpleado;
+	int cant =0;
+	bEmpleado = employee_new();
 
 	if(pFile!=NULL && pArrayListEmployee!=NULL)
 	{
 		while(!feof(pFile))
 		{
-			bEmpleado = employee_new();
-			fread(bEmpleado,sizeof(Employee),1,pFile);
-			if(bEmpleado!=NULL)
+			cant = fread(bEmpleado,sizeof(Employee),1,pFile);
+			if(cant==1)
 			{
 				ll_add(pArrayListEmployee,bEmpleado);
 				retorno = 0;
-			}
-			else
-			{
-				retorno = -1;
-				break;
+				emp_printAemployee(bEmpleado);
 			}
 		}
 	}else

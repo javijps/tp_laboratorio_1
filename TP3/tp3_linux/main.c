@@ -23,6 +23,7 @@ int main()
 {
 	//deberia agregar system clear
 
+	//arreglar 1er id
 	//PUNTO 7 //hacer submenu sort CON TODAS LAS OPCIONES. ACTUAL, ordena por nombre de forma descendente
 
 
@@ -59,7 +60,7 @@ int main()
 					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
 				break;
 			case 2:
-				if(flagTexto==0 && controller_loadFromBinary("data.bin",listaEmpleados)!=0)
+				if(flagTexto==0 && controller_loadFromBinary("data.bin",listaEmpleados)==0)
 						flagBinario = 1;
 				else
 					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");
