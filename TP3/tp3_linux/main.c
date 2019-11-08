@@ -17,61 +17,78 @@
      8. Guardar los datos de los empleados en el archivo data.csv (modo texto).
      9. Guardar los datos de los empleados en el archivo data.csv (modo binario).
     10. Salir
-*****************************************************/
+ *****************************************************/
 
-int main()//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
-{	//validar: si el archivo se abre en texto, no se puede abrir en binario y viceversa.
+int main()//HACER TODA LA DOCUMENTACION!!!!
+{
+	//hacer WRITE TEXTO.
+
+	//deberia agregar system clear? sino no entra cuando ordeno.
+	//PUNTO 7 //hacer submenu sort CON TODAS LAS OPCIONES. ACTUAL, ordena por nombre de forma descendente
+	//EXIT //debe borrar ll., CONFIRMAR CON PREGUNTA DE SALIDA
+	//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
+	//CHEQUEAR LOS MENSAJES DE ERRO DE CADA FUNCION
+
+	//validar: si el archivo se abre en texto, no se puede abrir en binario y viceversa.
 	//validar: si el archivo fue leido en texto, no puedo guardar en binario?y viceversa?
+	//Pedir y liberar memoria solo cuando creo y cuando borro, cuando uso buffer no?
+	//AGREGAR TODOS LOS FLAG NECESARIOS.(APERTURA DE ARCHIVOS Y ESCRITURA DE ARCHIVOS
+	//hacer de forma correcta el binario(2). ultimos(2 y 9)
+	//CHEQUEAR SI ES NECESARIO IMPORTAR EMPLOYEE EN EL MAIN
 
 	int option;
-    LinkedList* listaEmpleados = ll_newLinkedList();
+	LinkedList* listaEmpleados = ll_newLinkedList();
 
-    do{//PONERLE IF AL GETINT.  Pedir y liberar memoria solo cuando creo y cuando borro
-    	getInt(&option,"\nIngrese opcion:\n1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
-    			"2-Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n"
-    			"3-Alta empleado\n"
-    			"4-Modificar datos de empleado\n"
-    			"5-Baja de empleado\n"
-    			"6-Listar empleados\n"
-    			"7-Ordenar empleados\n"
-    			"8-Guardar los datos de los empleados en el archivo data.csv (modo texto)\n"
-    			"9-Guardar los datos de los empleados en el archivo data.csv (modo binario)\n"
-    			"10-Exit","Error\n",1,10,2);
-
-    	switch(option)//AGREGAR TODOS LOS FLAG NECESARIOS.
-    	{
-    	case 1://SI SE CARGO COMO BINARIO, NO PERMITIR CARGAR?
-    		controller_loadFromText("data.csv",listaEmpleados);//HACER VALIDACIONES DE LOS INPUt. GET NOMBRE NO FUNCIONA.
-    		break;
-    	case 2://SI SE CARGO COMO TEXTO, NO PERMITIR CARGAR?
-    		controller_loadFromBinary("data.bin",listaEmpleados);//hacer de forma correcta el binario. ultimo
-    		break;
-    	case 3://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO? HACER FUNCION GENERAR ID Y MAXIMO ID.
-    		controller_addEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT
-    		break;
-    	case 4://CHEQUEAR VALIDACIONES DE INPUTS. HACER ESHORAS Y ES SUELDO?
-    		controller_editEmployee(listaEmpleados);//ARREGLAR FUNCIONES INPUT.arreglar no imprime error
-    		break;
-    	case 5://CHEQUEAR VALIDACIONES DE INPUTS.
-    		controller_removeEmployee(listaEmpleados);
-    		break;
-    	case 6:
-    		controller_ListEmployee(listaEmpleados);
-    		break;
-    	case 7:
-    		controller_sortEmployee(listaEmpleados);//hacer submenu sort. asi, ordena por nombre de forma descendente
-    		break;
-    	case 8://
-    		controller_saveAsText("data.csv",listaEmpleados);
-    		break;
-    	case 9://FLAG PUNTO 2
-//    		controller_saveAsBinary(listaEmpleados);//RESOLVER PUNTO 2
-    		break;
-    	case 10://debe borrar ll.
-    		break;
-
-    	}
-    }while(option!=10);
-    return 0;
+	do{
+		if(getInt(&option,"\nIngrese opcion:\n1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
+				"2-Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n"
+				"3-Alta empleado\n"
+				"4-Modificar datos de empleado\n"
+				"5-Baja de empleado\n"
+				"6-Listar empleados\n"
+				"7-Ordenar empleados\n"
+				"8-Guardar los datos de los empleados en el archivo data.csv (modo texto)\n"
+				"9-Guardar los datos de los empleados en el archivo data.csv (modo binario)\n"
+				"10-Exit","Error\n",1,10,2)==0)
+		{
+			switch(option)
+			{
+			case 1:
+				controller_loadFromText("data.csv",listaEmpleados);
+				break;
+			case 2:
+//				controller_loadFromBinary("data.bin",listaEmpleados);
+				printf("entro 2");
+				break;
+			case 3:
+				controller_addEmployee(listaEmpleados);
+				break;
+			case 4:
+				controller_editEmployee(listaEmpleados);
+				break;
+			case 5:
+				controller_removeEmployee(listaEmpleados);
+				break;
+			case 6:
+				controller_ListEmployee(listaEmpleados);
+				break;
+			case 7:
+				controller_sortEmployee(listaEmpleados);
+				break;
+			case 8:
+				printf("entro 8");
+				//controller_saveAsText("data.csv",listaEmpleados);
+				break;
+			case 9:
+				printf("entro 9");
+//				controller_saveAsBinary("data.csv",listaEmpleados);
+				break;
+			case 10:
+				printf("entro 10");
+				break;
+			}
+		}
+		}while(option!=10);
+	return 0;
 }
 

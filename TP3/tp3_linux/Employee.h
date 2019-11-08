@@ -41,5 +41,9 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado);
 int employee_deleteEmployee(LinkedList* pArrayListEmployee);
 int emp_sortEmployeById(void* a,void* b);
 int emp_sortEmployeByName(void* a,void* b);
+int emp_maximoId(LinkedList* pArrayListEmployee);
+int emp_getNextId(LinkedList* pArrayListEmployee);
+int emp_existeEmpleadoByName(LinkedList* pArrayListEmployee,char *bName);
+
 
 #endif // employee_H_INCLUDED

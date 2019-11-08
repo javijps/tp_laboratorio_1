@@ -4,6 +4,12 @@
 #include "Employee.h"
 #include "parser.h"
 
+
+
+
+//AGREGAR IF SI NO SE PUDO ABRIR loadfrombinary
+//REVISAR APERTURA Y CREACION DE ARCHIVOS. ULTIMO
+
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -43,15 +49,16 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	int retorno = -1;
 	FILE* pFile;
 
-	pFile = fopen(path,"rb");//AGREGAR IF SI NO SE PUDO ABRIR
+	pFile = fopen(path,"rb");
 	if(pFile!=NULL)
 	{
 		if(pArrayListEmployee!=NULL &&
-			ll_len(pArrayListEmployee)==0 &&
-			parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0){
-		retorno = 0;}
-
-	printf("Archivo cargado!\n");
+				ll_len(pArrayListEmployee)==0 &&
+				parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
+		{
+			retorno = 0;
+			printf("Archivo cargado!\n");
+		}
 	}
 	else if(fopen(path,"wb")!=NULL)
 	{
@@ -80,7 +87,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 		{
 			pEmployee = employee_new();
 			pEmployee = employee_getDatosEmployee(pArrayListEmployee);
-			if(pEmployee!=NULL && ll_add(pArrayListEmployee,pEmployee)==0)//chequear retorno de add
+			if(pEmployee!=NULL && ll_add(pArrayListEmployee,pEmployee)==0)
 			{
 				retorno = 0;
 				printf("Empleado creado correctamente!\n");
@@ -175,7 +182,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 	}
 	else
 		printf("No fue posible imprimir la informacion!\n");
-    return retorno;
+	return retorno;
 }
 
 /** \brief Ordenar empleados
@@ -193,16 +200,16 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 	lenLL = ll_len(pArrayListEmployee);
 	if(pArrayListEmployee!=NULL && lenLL>0)
 	{
-		ll_sort(pArrayListEmployee,emp_sortEmployeByName,0);//1asc y 0 desc
-		printf("Empleados ordenados!!\n");
+		ll_sort(pArrayListEmployee,emp_sortEmployeByName,1);//1asc y 0 desc
 		controller_ListEmployee(pArrayListEmployee);
+		printf("Empleados ordenados por Nombre!!\n");
 		retorno = 0;
 	}
 	else
 	{
 		printf("No existen datos cargados a editar!\n");
 	}
-	    return retorno;
+	return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -241,6 +248,6 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+	return 1;
 }
 

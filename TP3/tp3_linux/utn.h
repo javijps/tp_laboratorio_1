@@ -48,10 +48,10 @@ int esAlfaNumerica(char *cadena);
 int getAlfanumerica(char *input,char *pMensaje,char *pMensajeError,int reintentos);
 int esCuit(char *cadena);
 int getCuit(char *input,char *pMensaje,char *pMensajeError,int reintentos);
-
-
 int getstringToInt(int *enteroRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos);
 int getstringToFloat(float *flotanteRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos);
+int getHoras(char *pEdad,char *pMensaje,char *pMensajeError,int reintentos);
+int getSueldo(char *pEdad,char *pMensaje,char *pMensajeError,int reintentos);
 
 
 

@@ -52,6 +52,35 @@ int main(void)
 
 
 
+/*NOTAS LL
+ * CASO NODO NUEVO EN 1ER ELEMENTO
+ * CREAR NODO, DEVUELVE P*
+ * FIRST NODE == PROXIMO DE NODO NUEVO
+ * LISTA FIRST NODE == P*NUEVO NODO
+ * SIZE++
+ *
+ *AGREGAR EN SIZE ES DECIR LO MISMO Q ULTIMO
+ *SIZE-1 ES EL ULTIMO
+ *
+ *
+ *hay 2 casos, agregar al principio cambio primernode en struct ll
+ *agregar en medio de 2(agregar al final es un caso particular de agregar en medio).pido anterior.
+ *
+ *
+ *get node. tomo recorro de uno en uno.pasa x todos.
+ *get node node index >=0 && node index<size
+ *size++
+ *ll ad ,es  llamar add node
+ *ll get es llam
+ *ll clear es remove repetido
+ *ll delete es remove y free
+ *ll
+ *hacer remove node
+ *
+ *
+ *
+ *
+ */
 
 
 

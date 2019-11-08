@@ -36,7 +36,6 @@ int getInt(   int *pNumero,
 	if(     pNumero != NULL &&
 			mensaje != NULL &&
 			mensajeError != NULL &&
-			minimo < maximo &&
 			reintentos>=0)
 	{
 		do
@@ -44,17 +43,20 @@ int getInt(   int *pNumero,
 			__fpurge(stdin);
 			if((getString(bufferStr,mensaje,mensajeError,1,50,2)==0) && (esInt(bufferStr))==0)
 			{
-				retorno = 0;
 				*pNumero =atoi(bufferStr);
+				if(*pNumero <minimo || *pNumero > maximo)
+				{
+					printf("%s",mensajeError);
+					retorno = -1;
+				}
+				retorno = 0;
 				break;
 			}
 			else
 			printf("%s",mensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
-
 	}
-
 	return retorno;
 }
 
@@ -79,7 +81,7 @@ int esInt(char *nInt)
     	}
     	else
     	{
-    	  	printf("no es numero\n");
+    	  	printf("No es un numero valido!\n");
     		retorno = -1;
     		break;
     	}
@@ -288,7 +290,6 @@ int esNombre(char *pNombre)
 			}
 			else
 			{
-				printf("posicion i:%c",pNombre[i]);
 				printf("Error, los datos ingresados no corresponden a un nombre!!\n");
 				break;
 			}
@@ -518,6 +519,64 @@ int getstringToFloat(float *flotanteRetorno,char *pString,char *pMensaje,char *p
 				printf(pMensajeError);
 				reintentos--;
 			}
+		}while(reintentos>0);
+	}
+	return retorno;
+}
+
+/**
+* \brief Solicita edad al usuario.
+* \param pNombre Se carga el nombre ingresado.
+* \param reintentos cantidad de errores permitidos
+* \return Si tuvo exito al obtener la edad [0] o si fallo [-1]
+*/
+int getHoras(char *pEdad,char *pMensaje,char *pMensajeError,int reintentos)
+{
+	int retorno=-1;
+	if(pEdad != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
+	{
+		do
+		{
+			getString(pEdad,pMensaje,pMensajeError,1,49,3);
+			if(esInt(pEdad)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}while(reintentos>0);
+	}
+	return retorno;
+}
+
+/**
+* \brief Solicita sueldo al usuario.
+* \param pNombre Se carga el nombre ingresado.
+* \param reintentos cantidad de errores permitidos
+* \return Si tuvo exito al obtener el sueldo [0] o si fallo [-1]
+*/
+int getSueldo(char *pEdad,char *pMensaje,char *pMensajeError,int reintentos)
+{
+	int retorno=-1;
+	if(pEdad != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
+	{
+		do
+		{
+			getString(pEdad,pMensaje,pMensajeError,1,49,3);
+			if(esInt(pEdad)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
 		}while(reintentos>0);
 	}
 	return retorno;

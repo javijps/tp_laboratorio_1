@@ -34,9 +34,8 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 			else if(flagCabecera!=0 && rd==4)
 			{
 				bEmpleado = employee_newParametros(bId,bName,bHoras,bSueldo);
-				if(bEmpleado!=NULL)
+				if(bEmpleado!=NULL && ll_add(pArrayListEmployee,bEmpleado)==0)
 				{
-					ll_add(pArrayListEmployee,bEmpleado);//agregar if?
 					retorno = 0;
 				}
 				else
@@ -79,10 +78,9 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 				}
 				else
 				{
-					if(flagCabecera==1 && rd==1)
+					if(flagCabecera==1 && rd==1 && ll_add(pArrayListEmployee,bEmpleado)==0)
 					{
-						if(ll_add(pArrayListEmployee,bEmpleado)==0)//chequear retorno de add
-							retorno = 0;
+						retorno = 0;
 					}
 					else
 						employee_delete(bEmpleado);

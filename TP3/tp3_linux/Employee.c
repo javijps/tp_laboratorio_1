@@ -3,7 +3,7 @@
 #include <string.h>
 #include "Employee.h"
 
-static int isValidNombre(char* nombre)//CARGAR UTN.H
+static int isValidNombre(char* nombre)
 {
 	int retorno = -1;
 	int i;
@@ -11,8 +11,8 @@ static int isValidNombre(char* nombre)//CARGAR UTN.H
 
 	if(nombre!=NULL)
 	{
-	    lenString = strlen(nombre);
-	    for(i=0;i<lenString;i++)
+		lenString = strlen(nombre);
+		for(i=0;i<lenString;i++)
 		{
 			if((nombre[i] >= 'a' && nombre[i] <= 'z') ||
 					(nombre[i] >= 'A' && nombre[i] <= 'Z') ||
@@ -23,7 +23,10 @@ static int isValidNombre(char* nombre)//CARGAR UTN.H
 				i++;
 			}
 			else
+			{
+				retorno = -1;
 				break;
+			}
 		}
 	}
 	return retorno;
@@ -72,8 +75,6 @@ void employee_delete(Employee* this)
 	free(this);
 }
 
-
-
 int employee_setId(Employee* this,int id)
 {
 	int retorno = -1;
@@ -86,7 +87,6 @@ int employee_setId(Employee* this,int id)
 	return retorno;
 }
 
-
 int employee_getId(Employee* this,int* id)
 {
 	int retorno = -1;
@@ -98,7 +98,6 @@ int employee_getId(Employee* this,int* id)
 	}
 	return retorno;
 }
-
 
 
 int employee_setNombre(Employee* this,char* nombre)
@@ -130,7 +129,7 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 {
 	int retorno = -1;
 
-	if(this!=NULL && isValhorasTrabajadas(horasTrabajadas))
+	if(this!=NULL && isValhorasTrabajadas(horasTrabajadas)==1)
 	{
 		this->horasTrabajadas = horasTrabajadas;
 		retorno = 0;
@@ -179,8 +178,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 
 
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldo)
-{//modificar pase de string to int, nueva funcion sin msjs ni reintentos
-
+{
 	Employee* retorno = NULL;
 	Employee* this;
 	this = employee_new();
@@ -243,23 +241,6 @@ void emp_printEmployees(Employee* aEmployee,int len)
 	}
 }
 
-
-/*
-int generarIdEmployee(LinkedList* pArrayList,bufferId)//llama a buscarIdMaximo. devuelve el id
-{
-	int retorno = 0;
-	int i;
-
-	if(pArrayList!=NULL)
-	{
-		ll_sort(pArrayList,*empl_buscarMaximoId())
-	}
-	return retorno;
-}
-
-
-*/
-
 Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 {
 	int lenLlARray;
@@ -283,8 +264,76 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 	return bEmployee;
 }
 
+int emp_existeEmpleadoByName(LinkedList* pArrayListEmployee,char *bName)
+{
+	int retorno = -1;
+	int lenLlARray;
+	int i;
+	int lenString;
+	Employee* bEmpleado = NULL;
+
+	lenLlARray = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenLlARray>0 && bName!=NULL)
+	{
+		for(i=0;i<lenLlARray;i++)
+		{
+			bEmpleado = ll_get(pArrayListEmployee,i);
+			lenString = strlen(bName)-1;
+			if(strncmp(bEmpleado->nombre,bName,lenString)==0)
+			{
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
 
 
+
+int emp_maximoId(LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;
+	int maximo_id=0;
+	int i;
+	int lenArray;
+	Employee* bEmpleado;
+
+	lenArray = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenArray>0)
+	{
+		for(i=0;i<lenArray;i++)
+		{
+			bEmpleado = ll_get(pArrayListEmployee,i);
+			if(bEmpleado!=NULL && bEmpleado->id > maximo_id)
+			{
+				maximo_id = bEmpleado->id;
+			}
+		}
+		retorno = maximo_id;
+	}
+	return retorno;
+}
+
+int emp_getNextId(LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;
+	int maxId=0;
+	int nextId;
+	int lenArray;
+
+	lenArray = ll_len(pArrayListEmployee);
+	if(pArrayListEmployee!=NULL && lenArray>0)
+	{
+		maxId = emp_maximoId(pArrayListEmployee);
+		if(maxId>=0)
+		{
+			nextId = maxId+1;
+			retorno = nextId;
+		}
+	}
+	return retorno;
+}
 
 /**
  * \brief Solicita los datos correspondientes a una cliente.
@@ -294,7 +343,7 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
  */
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)
 {
-	char bId[1046]="0";
+	char bId[1046];
 	char bName[1046];
 	char bHoras[1046];
 	char bSueldo[1046];
@@ -303,36 +352,31 @@ Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)
 	if(pArrayListEmployee!=NULL)
 	{
 		bEmployee = employee_new();
-		if(getNombre(bName,"Ingrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)
+		if(getNombre(bName,"\nIngrese nombre del empleado\n","Nombre Incorrecto\n",3)!=0)
 		{
 			printf("No fue posible agregar el nombre\n");
 			bEmployee=NULL;
 		}
-		if(getString(bHoras,"Ingrese cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
+		if(getHoras(bHoras,"Ingrese cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",2)!=0)
 		{
 			printf("No fue posible agregar las hs trabajadas!\n");
 			bEmployee=NULL;
 		}
-		if(getString(bSueldo,"Ingrese sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
+		if(getSueldo(bSueldo,"Ingrese sueldo del empleado","Sueldo Incorrecto!\n",2)!=0)
 		{
 			printf("No fue posible agregar el sueldo del empleado!\n");
 			bEmployee=NULL;
 		}
-		//int generarIdEmployee(linkedlist)llama a buscarIdMaximo
 		if(bEmployee!=NULL)
 		{
-			//				printf("bemplo ok\n");
-			//				if(employee_buscarEmployeeid(pArrayListEmployee,bEmployee)!=0)
-			//				{
-			//					retorno = bEmployee;
-			//					printf("busco ok ok");
-			//				}
-			//				else
-			//				{
-			//					printf("Error al cargar el empleado!\n");
-			//					break;
-			//				}
 			bEmployee = employee_newParametros(bId,bName,bHoras,bSueldo);
+			bEmployee->id = emp_getNextId(pArrayListEmployee);
+			if(emp_existeEmpleadoByName(pArrayListEmployee,bName)==0)
+			{
+				printf("\nNombre de Empleado existente!\n"
+						"Ha creado un empleado con un nombre igual a un empleado registrado\n"
+						"Si se trata de un empleado duplicado,elimine(opcion 5 Menu principal)\n");
+			}
 		}
 		else
 			employee_delete(bEmployee);
@@ -349,23 +393,22 @@ Employee* employee_EditEmployee(LinkedList* pArrayListEmployee)
 	if(pArrayListEmployee!=NULL)
 	{
 		controller_ListEmployee(pArrayListEmployee);
-		//getID
 		if(getInt(&bId,"Ingrese ID del Empleado a modificar\n","Error Id invalido!\n",1,10000,2)==0)
 		{
 			bEmpleado = emp_findEmployeeById(pArrayListEmployee,bId);
 			if(bEmpleado!=NULL)
 			{
-			indexEmpleado = ll_indexOf(pArrayListEmployee,bEmpleado);
-			if(emp_subMenuEditEmployee(bEmpleado)!=NULL)
-			{
-				ll_set(pArrayListEmployee,indexEmpleado,bEmpleado);
-				emp_printAemployee(bEmpleado);
-				printf("\nModificacion Exitosa!");
-			}
-			else
-			{
-				printf("No fue posible cargar las modificaciones en el empleado seleccionado!\n");
-			}
+				indexEmpleado = ll_indexOf(pArrayListEmployee,bEmpleado);
+				if(emp_subMenuEditEmployee(bEmpleado)!=NULL)
+				{
+					ll_set(pArrayListEmployee,indexEmpleado,bEmpleado);
+					emp_printAemployee(bEmpleado);
+					printf("\nModificacion Exitosa!");
+				}
+				else
+				{
+					printf("No fue posible cargar las modificaciones en el empleado seleccionado!\n");
+				}
 			}
 			else
 				printf("Empleado no encontrado!\n");
@@ -381,52 +424,53 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 	int bSueldo;
 	int option;
 
-	//puedo calcular el maximo id y ponerlo como parametro maximo del get int del submenu
+	do{
+		if(getInt(&option,"\nIngrese opcion:\n1-Modificar Nombre del Empleado\n"
+				"2-Modificar Horas trabajadas del empleado\n\n"
+				"3-Modificar Sueldo del Empleado\n"
+				"4-EXIT\n",
+				"Error opcion incorrecta\n",1,4,2)==0)//DEBERIA IMPRIMIR EL ERROR
+		{
+			switch(option)
+			{
+			case 1:
+				if(getNombre(bNombre,"Ingrese nuevo nombre del Empleado\n","Nombre Incorrecto\n",3)!=0)
+				{
+					printf("No fue posible modificar el nombre!\n");
+					//bEmpleado=NULL;
+					break;
+				}
+				else
+					employee_setNombre(bEmpleado,bNombre);
+				//strncpy(bEmpleado->nombre,bNombre,128);
+				break;
+			case 2:
+				if(getInt(&bHoras,"Ingrese nueva cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0 ||
+						isValhorasTrabajadas(bHoras)!=1)//hacer geths
+				{
+					printf("No fue posible agregar las hs trabajadas!\n");
+					//bEmpleado=NULL;
+					break;
+				}
+				else
+					employee_setHorasTrabajadas(bEmpleado,bHoras);
+				break;
+			case 3:
+				if(getInt(&bSueldo,"Ingrese nuevo sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0 ||
+						isValsueldo(bSueldo)!=1)
+				{
+					printf("No fue posible modificar el sueldo del empleado!\n");
+					//bEmpleado=NULL;
+					break;
+				}
+				else
+					employee_setSueldo(bEmpleado,bSueldo);
+				break;
+			}
+		}
+	}while(option!=4);
 
-	   do{
-	    	if(getInt(&option,"\nIngrese opcion:\n1-Modificar Nombre del Empleado\n"
-	    			"2-Modificar Horas trabajadas del empleado\n\n"
-	    			"3-Modificar Sueldo del Empleado\n"
-	    			"4-EXIT\n",
-					"Error opcion incorrecta\n",1,4,2)==0)//maximoid como argumento del maximo en get int. 	DEBERIA IMPRIMIR EL ERROR
-	    	{
-	    		switch(option)
-	    		{
-	    		case 1:
-	    			if(getNombre(bNombre,"Ingrese nuevo nombre del Empleado\n","Nombre Incorrecto\n",3)!=0)
-	    			{
-	    				printf("No fue posible modificar el nombre!\n");
-	    				//bEmpleado=NULL;
-	    				break;
-	    			}
-	    			else
-	    				employee_setNombre(bEmpleado,bNombre);
-	    			//strncpy(bEmpleado->nombre,bNombre,128);
-	    			break;
-	    		case 2:
-	    			if(getInt(&bHoras,"Ingrese nueva cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0)//hacer geths
-	    			{
-	    				printf("No fue posible agregar las hs trabajadas!\n");
-	    				//bEmpleado=NULL;
-	    				break;
-	    			}
-	    			else
-	    				employee_setHorasTrabajadas(bEmpleado,bHoras);
-	    			break;
-	    		case 3:
-	    			if(getInt(&bSueldo,"Ingrese nuevo sueldo del empleado","Sueldo Incorrecto!\n",1,1000,2)!=0)
-	    			{
-	    				printf("No fue posible modificar el sueldo del empleado!\n");
-	    				//bEmpleado=NULL;
-	    				break;
-	    			}
-	    			else
-	    				employee_setSueldo(bEmpleado,bSueldo);
-	    			break;
-	    		}
-	    	}
-	   }while(option!=4);
-	   return bEmpleado;
+	return bEmpleado;
 }
 
 
@@ -447,7 +491,7 @@ int employee_deleteEmployee(LinkedList* pArrayListEmployee)
 			if(getInt(&option,"\nConfirma que desea borrar este empleado?\n"
 					"1-Confirmar eliminacion\n"
 					"2-Desechar operacion\n","Error, opcion invalida",1,3,2)==0
-					           && option==1)
+					&& option==1)
 			{
 				bEmpleado = emp_findEmployeeById(pArrayListEmployee,bId);
 				if(bEmpleado!=NULL)
@@ -493,40 +537,6 @@ int emp_sortEmployeByName(void* a,void* b)
 	}
 	return 0;
 }
-
-
-
-
-
-/*NOTAS LL
- * CASO NODO NUEVO EN 1ER ELEMENTO
- * CREAR NODO, DEVUELVE P*
- * FIRST NODE == PROXIMO DE NODO NUEVO
- * LISTA FIRST NODE == P*NUEVO NODO
- * SIZE++
- *
- *AGREGAR EN SIZE ES DECIR LO MISMO Q ULTIMO
- *SIZE-1 ES EL ULTIMO
- *
- *
- *hay 2 casos, agregar al principio cambio primernode en struct ll
- *agregar en medio de 2(agregar al final es un caso particular de agregar en medio).pido anterior.
- *
- *
- *get node. tomo recorro de uno en uno.pasa x todos.
- *get node node index >=0 && node index<size
- *size++
- *ll ad ,es  llamar add node
- *ll get es llam
- *ll clear es remove repetido
- *ll delete es remove y free
- *ll
- *hacer remove node
- *
- *
- *
- *
- */
 
 
 
