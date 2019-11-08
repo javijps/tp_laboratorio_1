@@ -19,22 +19,20 @@
     10. Salir
  *****************************************************/
 
-int main()//HACER TODA LA DOCUMENTACION!!!!
+int main()
 {
+	//deberia agregar system clear
+
 	//hacer WRITE TEXTO.
-
-	//deberia agregar system clear? sino no entra cuando ordeno.
 	//PUNTO 7 //hacer submenu sort CON TODAS LAS OPCIONES. ACTUAL, ordena por nombre de forma descendente
-	//EXIT //debe borrar ll., CONFIRMAR CON PREGUNTA DE SALIDA
-	//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
-	//CHEQUEAR LOS MENSAJES DE ERRO DE CADA FUNCION
-
-	//validar: si el archivo se abre en texto, no se puede abrir en binario y viceversa.
-	//validar: si el archivo fue leido en texto, no puedo guardar en binario?y viceversa?
-	//Pedir y liberar memoria solo cuando creo y cuando borro, cuando uso buffer no?
 	//AGREGAR TODOS LOS FLAG NECESARIOS.(APERTURA DE ARCHIVOS Y ESCRITURA DE ARCHIVOS
-	//hacer de forma correcta el binario(2). ultimos(2 y 9)
+	//HACER TODA LA DOCUMENTACION!!!!
+
+	//Pedir y liberar memoria solo cuando creo y cuando borro, cuando uso buffer no?
+	//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
+	//CHEQUEAR LOS MENSAJES DE ERROr DE CADA FUNCION
 	//CHEQUEAR SI ES NECESARIO IMPORTAR EMPLOYEE EN EL MAIN
+
 
 	int option;
 	LinkedList* listaEmpleados = ll_newLinkedList();
@@ -49,7 +47,7 @@ int main()//HACER TODA LA DOCUMENTACION!!!!
 				"7-Ordenar empleados\n"
 				"8-Guardar los datos de los empleados en el archivo data.csv (modo texto)\n"
 				"9-Guardar los datos de los empleados en el archivo data.csv (modo binario)\n"
-				"10-Exit","Error\n",1,10,2)==0)
+				"10-Exit","Error\n",1,11,2)==0)
 		{
 			switch(option)
 			{
@@ -76,19 +74,20 @@ int main()//HACER TODA LA DOCUMENTACION!!!!
 				controller_sortEmployee(listaEmpleados);
 				break;
 			case 8:
-				printf("entro 8");
-				//controller_saveAsText("data.csv",listaEmpleados);
+				controller_saveAsText("data.csv",listaEmpleados);
 				break;
 			case 9:
 				printf("entro 9");
 //				controller_saveAsBinary("data.csv",listaEmpleados);
 				break;
 			case 10:
-				printf("entro 10");
+				if(controller_exitMenu(listaEmpleados)==0)
+					option=11;
 				break;
 			}
 		}
-		}while(option!=10);
+		}while(option!=11);
+	printf("Programa cerrado!\n");
 	return 0;
 }
 

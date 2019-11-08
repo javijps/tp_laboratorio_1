@@ -251,3 +251,27 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	return 1;
 }
 
+/** \brief Elimina.
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
+int controller_exitMenu(LinkedList* pArrayListEmployee)
+{
+	int retorno = -1;;
+	int option;
+
+	getInt(&option,"Desea abandonar el programa?\nToda la informacion no grabada en archivo se perdera\n"
+			"Ingrese\n"
+			"1-Confirmar\n"
+			"2-Continuar dentro del programa\n",
+			"Opcion Incorrecta\n",1,3,2);
+	if(pArrayListEmployee!= NULL && option==1)
+	{
+		ll_deleteLinkedList(pArrayListEmployee);
+		retorno = 0;
+	}
+	return retorno;
+}
