@@ -17,7 +17,10 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)//MENSAJ
 	FILE* pFile;
 	pFile = fopen(path,"r");
 
-	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
+	if(pFile!=NULL &&
+			pArrayListEmployee!=NULL &&
+			ll_len(pArrayListEmployee)==0 &&
+			parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
 	{
 		retorno = 0;
 		printf("Archivo cargado!\n");
@@ -39,16 +42,24 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	FILE* pFile;
-	pFile = fopen(path,"rb");//AGREGAR IF SI NO SE PUDO ABRIR
 
-	if(pFile!=NULL && pArrayListEmployee!=NULL && parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
+	pFile = fopen(path,"rb");//AGREGAR IF SI NO SE PUDO ABRIR
+	if(pFile!=NULL)
 	{
-		retorno = 0;
-		printf("Archivo cargado!\n");
-		fclose(pFile);
+		if(pArrayListEmployee!=NULL &&
+			ll_len(pArrayListEmployee)==0 &&
+			parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0){
+		retorno = 0;}
+
+	printf("Archivo cargado!\n");
+	}
+	else if(fopen(path,"wb")!=NULL)
+	{
+		printf("Archivo creado!\n");
 	}
 	else
-		printf("No fue posible cargar el archivo\n");
+		printf("Archivo inexistente!\nNo hay memoria para crear el archivo!\n");
+	fclose(pFile);
 	return retorno;
 }
 /** \brief Alta de empleados
@@ -182,8 +193,9 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 	lenLL = ll_len(pArrayListEmployee);
 	if(pArrayListEmployee!=NULL && lenLL>0)
 	{
-		ll_sort(pArrayListEmployee,emp_sortEmployeById,1);
+		ll_sort(pArrayListEmployee,emp_sortEmployeByName,0);//1asc y 0 desc
 		printf("Empleados ordenados!!\n");
+		controller_ListEmployee(pArrayListEmployee);
 		retorno = 0;
 	}
 	else
@@ -212,16 +224,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 	printf("Largo lenLL %d\n",lenLL);
 	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
 	{
-		wt = fwrite(pArrayListEmployee,sizeof(Employee),lenLL,pFile);
-		if(wt==lenLL)
-		{
-			printf("Archivo cargado!\n");
-			retorno = 0;
-		}
-		else
-		{
-			printf("Error al cargar los datos!\n");
-		}
+
 		fclose(pFile);
 	}
 	else
