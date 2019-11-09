@@ -49,7 +49,7 @@ int main()
 					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
 				break;
 			case 2:
-				if(flagTexto==0 && controller_loadFromBinary("data.bin",listaEmpleados)==0)
+				if(controller_loadFromBinary("data.bin",listaEmpleados)==0)
 						flagBinario = 1;
 				else
 					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");

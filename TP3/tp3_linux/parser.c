@@ -72,7 +72,6 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 			{
 				ll_add(pArrayListEmployee,bEmpleado);
 				retorno = 0;
-				emp_printAemployee(bEmpleado);
 			}
 		}
 	}else

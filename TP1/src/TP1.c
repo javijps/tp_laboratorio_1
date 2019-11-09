@@ -1,5 +1,5 @@
 /*******************************************************************
-* Programa: Trabajo Practico N°1
+* Programa: Trabajo Practico Nï¿½1
 * Objetivo: Hacer una calculadora
 *
 * Version: 0.1 del 9 Septiembre de 2019
@@ -128,7 +128,7 @@ int main(void) {
 				}
 				else
 				{
-					printf("El factorial de A es: %I64d\n",factorialA);
+					printf("El factorial de A es: %lld\n",factorialA);
 				}
 				if(factorialB==0)
 				{
@@ -136,7 +136,7 @@ int main(void) {
 				}
 				else
 				{
-					printf("El factorial de B es: %I64d\n",factorialB);
+					printf("El factorial de B es: %lld\n",factorialB);
 				}
 				break;
 				}

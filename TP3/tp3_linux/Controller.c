@@ -47,7 +47,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	int retorno = -1;
 	FILE* pFile;
 
-	pFile = fopen(path,"r+b");
+	pFile = fopen(path,"rb");
 	if(pFile!=NULL)
 	{
 		if(pArrayListEmployee!=NULL &&
