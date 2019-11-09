@@ -21,7 +21,6 @@
 
 int main()
 {
-	//HACER TODA LA DOCUMENTACION!!!!
 
 	int option;
 	int flagTexto = 0;
