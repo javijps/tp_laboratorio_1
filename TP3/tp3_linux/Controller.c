@@ -35,7 +35,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)//MENSAJ
 	return retorno;
 }
 
-/** \brief Carga los datos de los empleados desde el archivo data.csv (modo binario).
+/** \brief Carga los datos de los empleados desde el archivo data.csv (modo binario). Si no existe, lo crea
  *
  * \param path char*
  * \param pArrayListEmployee LinkedList*
@@ -297,11 +297,9 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 		printf("No fue posible guardar la informacion!\nArchivo Inexistente!\n");
 	return retorno;
 }
-/** \brief Elimina.
- *
- * \param path char*
+/** \brief Sale del menu al confirmar, Elimina array LinkedList y libera espacio en memoria
  * \param pArrayListEmployee LinkedList*
- * \return int
+ * \return 0 si se confirma la eliminacion -1 si falla o es cancelada.
  *
  */
 int controller_exitMenu(LinkedList* pArrayListEmployee)

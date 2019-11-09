@@ -30,11 +30,7 @@ int employee_setSueldo(Employee* this,int sueldo);
 int employee_getSueldo(Employee* this,int* sueldo);
 
 void emp_printAemployee(Employee* employee);
-
-//int buscarIdMaximo()
-//int generarIdEmployee(llama a buscarIdMaximo)
 Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee);
-
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee);//
 Employee* employee_EditEmployee(LinkedList* pArrayListEmployee);
 Employee* emp_subMenuEditEmployee(Employee* bEmpleado);
