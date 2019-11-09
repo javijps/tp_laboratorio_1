@@ -3,6 +3,13 @@
 #include <string.h>
 #include "Employee.h"
 
+/** \brief Validacion de nombre
+ *
+ * \param char* nombre. puntero a cadena de caracteres
+ * \return int 1 si el nombre es valido, -1 si no lo es
+ *
+ */
+
 static int isValidNombre(char* nombre)
 {
 	int retorno = -1;
@@ -32,6 +39,12 @@ static int isValidNombre(char* nombre)
 	return retorno;
 }
 
+/** \brief Validacion de Id
+ *
+ * \param char* id. puntero a cadena de caracteres
+ * \return int 1 si el id es valido, -1 si no lo es
+ *
+ */
 static int isValidId(int id)//CARGAR UTN.H
 {
 	int retorno=-1;
@@ -43,6 +56,12 @@ static int isValidId(int id)//CARGAR UTN.H
 	return retorno;
 }
 
+/** \brief Validacion de horas trabajadas
+ *
+ * \param char* horas trabajadas. puntero a cadena de caracteres
+ * \return int 1 si el id es valido, -1 si no lo es
+ *
+ */
 static int isValhorasTrabajadas(int horasTrabajadas)//CARGAR UTN.H
 {
 	int retorno=-1;
@@ -54,6 +73,12 @@ static int isValhorasTrabajadas(int horasTrabajadas)//CARGAR UTN.H
 	return retorno;
 }
 
+/** \brief Validacion de sueldo
+ *
+ * \param char* sueldo. puntero a cadena de caracteres
+ * \return int 1 si el id es valido, -1 si no lo es
+ *
+ */
 static int isValsueldo(int sueldo)//CARGAR UTN.H
 {
 	int retorno=-1;
@@ -65,16 +90,30 @@ static int isValsueldo(int sueldo)//CARGAR UTN.H
 	return retorno;
 }
 
+/** \brief Pide espacio en memoria
+ *
+ * \return puntero a espacio de memoria reservado para dato del tipo Employee
+ *
+ */
 Employee* employee_new()
 {
 	return malloc(sizeof(Employee));
 }
 
+/** \brief Libera espacio de memoria por medio de free
+ *
+ *
+ */
 void employee_delete(Employee* this)
 {
 	free(this);
 }
 
+/** \brief Carga id en el campo id de una estructura Employee
+ *
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 int employee_setId(Employee* this,int id)
 {
 	int retorno = -1;
@@ -87,6 +126,11 @@ int employee_setId(Employee* this,int id)
 	return retorno;
 }
 
+/** \brief Obtiene id del campo id de una estructura Employee
+ *
+ * \return 0 si logra la obtenerlo -1 si falla
+ *
+ */
 int employee_getId(Employee* this,int* id)
 {
 	int retorno = -1;
@@ -99,7 +143,11 @@ int employee_getId(Employee* this,int* id)
 	return retorno;
 }
 
-
+/** \brief Carga nombre en el campo nombre de una estructura Employee
+ *
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 int employee_setNombre(Employee* this,char* nombre)
 {
 	int retorno = -1;
@@ -113,6 +161,11 @@ int employee_setNombre(Employee* this,char* nombre)
 }
 
 
+/** \brief Obtiene  nombre del campo nombre  de una estructura Employee
+ *
+ * \return 0 si logra la obtenerlo -1 si falla
+ *
+ */
 int employee_getNombre(Employee* this,char* nombre)
 {
 	int retorno = -1;
@@ -125,6 +178,11 @@ int employee_getNombre(Employee* this,char* nombre)
 	return retorno;
 }
 
+/** \brief Carga horasTrabajadas en el campo horasTrabajadas de una estructura Employee
+ *
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 {
 	int retorno = -1;
@@ -137,7 +195,11 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 	return retorno;
 }
 
-
+/** \brief Obtiene horas trabajadas del campo horas trabajadas de una estructura Employee
+ *
+ * \return 0 si logra la obtenerlo -1 si falla
+ *
+ */
 int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 {
 	int retorno = -1;
@@ -149,7 +211,11 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 	}
 	return retorno;
 }
-
+/** \brief Carga sueldo en el campo sueldo de una estructura Employee
+ *
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 int employee_setSueldo(Employee* this,int sueldo)
 {
 	int retorno = -1;
@@ -162,7 +228,11 @@ int employee_setSueldo(Employee* this,int sueldo)
 	return retorno;
 }
 
-
+/** \brief Obtiene sueldo del campo sueldo de una estructura Employee
+ *
+ * \return 0 si logra la obtenerlo -1 si falla
+ *
+ */
 int employee_getSueldo(Employee* this,int* sueldo)
 {
 	int retorno = -1;
@@ -176,7 +246,11 @@ int employee_getSueldo(Employee* this,int* sueldo)
 }
 
 
-
+/** \brief Carga todos los campos de una estructura Employee
+ *
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldo)
 {
 	Employee* retorno = NULL;
@@ -205,7 +279,11 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	return retorno;
 }
 
-
+/** \brief Imprime un elemento de la estructura Employee
+ *
+ *
+ *
+ */
 void emp_printAemployee(Employee* employee)
 {
 	if(employee!=NULL)
@@ -221,7 +299,11 @@ void emp_printAemployee(Employee* employee)
 	}
 }
 
-void emp_printEmployees(Employee* aEmployee,int len)
+/** \brief Imprime array de elementos de la estructura Employee
+ *
+ *
+ *
+ */void emp_printEmployees(Employee* aEmployee,int len)
 {
 	int i;
 
@@ -241,6 +323,12 @@ void emp_printEmployees(Employee* aEmployee,int len)
 	}
 }
 
+ /** \brief Busca un empleado en un array LinkedList a partir de su id
+  *param LinkedList* puntero a la estructura LinkedList.
+  *param int idEmployee. id del empleado
+  *
+  *return 1 elemento de la estructura Employee(con todos sus campos si lo encuentra) NULL si no lo encuentra
+  */
 Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 {
 	int lenLlARray;
@@ -264,6 +352,12 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 	return bEmployee;
 }
 
+/** \brief Revisa si existe un empleado con el mismo nombre ingresado
+ *param LinkedList* puntero a la estructura LinkedList.
+ *param char bName. nombre del empleado
+ *
+ *return 0 si lo encuentra -1 si no lo encuentra
+ */
 int emp_existeEmpleadoByName(LinkedList* pArrayListEmployee,char *bName)
 {
 	int retorno = -1;
@@ -290,7 +384,11 @@ int emp_existeEmpleadoByName(LinkedList* pArrayListEmployee,char *bName)
 }
 
 
-
+/** \brief Busca el id maximo en un array Linked LIst de Employees
+ * param LinkedList* puntero a la estructura LinkedList.
+ * \return 0 si logra la carga -1 si falla
+ *
+ */
 int emp_maximoId(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
@@ -315,6 +413,11 @@ int emp_maximoId(LinkedList* pArrayListEmployee)
 	return retorno;
 }
 
+/** \brief Devuelve el id correspondiente a un nuevo empleado
+ * param LinkedList* puntero a la estructura LinkedList.
+ * \return 0 si logra generar el id, -1 si falla
+ *
+ */
 int emp_getNextId(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
@@ -336,10 +439,9 @@ int emp_getNextId(LinkedList* pArrayListEmployee)
 }
 
 /**
- * \brief Solicita los datos correspondientes a una cliente.
- * \param sCliente *acliente puntero a una xxxxx de la estructura cliente.
- * \param cantidad Cantidad de clientes.
- * \return Si tuvo exito al completar todos los campos devuelve [0] o si fallo [-1]
+ * \brief Solicita los datos correspondientes a una EMPLEADO.
+ * \param LinkedList* pArrayListEmployee puntero a un array de la estructura del tipo LinkedList.
+ * \return Si tuvo exito al completar todos los campos devuelve un Employee o si fallo [NULL]
  */
 Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)
 {
@@ -384,6 +486,11 @@ Employee* employee_getDatosEmployee(LinkedList* pArrayListEmployee)
 	return bEmployee;
 }
 
+/**
+ * \brief eDITA los datos correspondientes a una EMPLEADO.
+ * \param LinkedList* pArrayListEmployee puntero a un array de la estructura del tipo LinkedList.
+ * \return Si tuvo exito a editar todos los campos devuelve un Employee o si fallo [NULL]
+ */
 Employee* employee_EditEmployee(LinkedList* pArrayListEmployee)
 {
 	Employee* bEmpleado = NULL;
@@ -417,6 +524,11 @@ Employee* employee_EditEmployee(LinkedList* pArrayListEmployee)
 	return bEmpleado;
 }
 
+/**
+ * \brief Muestra un menu para interactuar en la modificacion de un empleado con el usuario.
+ * \param LinkedList* bEmpleado puntero a un elemento del tipo Employee.
+ * \return Si tuvo exito al completar todos los campos devuelve un Employee o si fallo [NULL]
+ */
 Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 {
 	char bNombre[1046];
@@ -437,19 +549,16 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 				if(getNombre(bNombre,"Ingrese nuevo nombre del Empleado\n","Nombre Incorrecto\n",3)!=0)
 				{
 					printf("No fue posible modificar el nombre!\n");
-					//bEmpleado=NULL;
 					break;
 				}
 				else
 					employee_setNombre(bEmpleado,bNombre);
-				//strncpy(bEmpleado->nombre,bNombre,128);
 				break;
 			case 2:
 				if(getInt(&bHoras,"Ingrese nueva cantidad de hs trabajadas","Cantidad de hs incorrecta!\n",1,1000,2)!=0 ||
-						isValhorasTrabajadas(bHoras)!=1)//hacer geths
+						isValhorasTrabajadas(bHoras)!=1)
 				{
 					printf("No fue posible agregar las hs trabajadas!\n");
-					//bEmpleado=NULL;
 					break;
 				}
 				else
@@ -460,7 +569,6 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 						isValsueldo(bSueldo)!=1)
 				{
 					printf("No fue posible modificar el sueldo del empleado!\n");
-					//bEmpleado=NULL;
 					break;
 				}
 				else
@@ -473,7 +581,11 @@ Employee* emp_subMenuEditEmployee(Employee* bEmpleado)
 	return bEmpleado;
 }
 
-
+/**
+ * \brief Elimina un elemento del array de LinkedList y libera su espacio en memoria
+ * \param LinkedList* pArrayListEmployee puntero a un array de la estructura del tipo LinkedList.
+ * \return Si tuvo exito al completar todos los campos devuelve un Employee o si fallo [NULL]
+ */
 int employee_deleteEmployee(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
@@ -509,6 +621,12 @@ int employee_deleteEmployee(LinkedList* pArrayListEmployee)
 	return retorno;
 }
 
+/**
+ * \brief Ordena  un array de LinkedList por id, de forma Asc o Desc, segun se le indique.
+ * \param void*a puntero a void
+ * \param void*b puntero a void
+ * \return Si tuvo exito al ordenar ascendentemente 1 o -1 descendentemente
+ */
 int emp_sortEmployeById(void* a,void* b)
 {
 	int id_a = ((Employee*)a)->id;

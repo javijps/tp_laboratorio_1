@@ -21,18 +21,7 @@
 
 int main()
 {
-	//deberia agregar system clear
-
-	//arreglar 1er id
-	//PUNTO 7 //hacer submenu sort CON TODAS LAS OPCIONES. ACTUAL, ordena por nombre de forma descendente
-
-
-	//AGREGAR TODOS LOS FLAG NECESARIOS.(APERTURA DE ARCHIVOS Y ESCRITURA DE ARCHIVOS
 	//HACER TODA LA DOCUMENTACION!!!!
-	//CHEQUEAR QUE TODAS LAS FUNCIONES TENGAN EL IF CORRESPONDIENTE AL CHEQUEO DE PARAMETROS EN EL PRIMER IF
-	//CHEQUEAR LOS MENSAJES DE ERROr DE CADA FUNCION
-	//CHEQUEAR SI ES NECESARIO IMPORTAR EMPLOYEE EN EL MAIN
-
 
 	int option;
 	int flagTexto = 0;
@@ -40,6 +29,7 @@ int main()
 	LinkedList* listaEmpleados = ll_newLinkedList();
 
 	do{
+		//system("clear"); DESCOMENTAR DE SER NECESARIO
 		if(getInt(&option,"\nIngrese opcion:\n1-Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n"
 				"2-Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n"
 				"3-Alta empleado\n"
@@ -81,10 +71,16 @@ int main()
 				controller_sortEmployee(listaEmpleados);
 				break;
 			case 8:
-				controller_saveAsText("data.csv",listaEmpleados);
+				if(flagTexto==0)
+					printf("No es posible guardar el archivo en modo texto si no se abrio un archivo de ese tipo!\n");
+				else
+					controller_saveAsText("data.csv",listaEmpleados);
 				break;
 			case 9:
-				controller_saveAsBinary("data.bin",listaEmpleados);
+				if(flagBinario==0)
+					printf("No es posible guardar el archivo en modo binario si no se abrio un archivo de ese tipo!\n");
+				else
+					controller_saveAsBinary("data.csv",listaEmpleados);
 				break;
 			case 10:
 				if(controller_exitMenu(listaEmpleados)==0)

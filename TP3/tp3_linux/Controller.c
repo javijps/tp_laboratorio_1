@@ -7,8 +7,6 @@
 
 
 
-//AGREGAR IF SI NO SE PUDO ABRIR loadfrombinary
-//REVISAR APERTURA Y CREACION DE ARCHIVOS. ULTIMO
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -205,9 +203,9 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 	lenLL = ll_len(pArrayListEmployee);
 	if(pArrayListEmployee!=NULL && lenLL>0)
 	{
+		printf("Ordenando empleados por Nombre de forma ascendente....\n");
 		ll_sort(pArrayListEmployee,emp_sortEmployeByName,1);//1asc y 0 desc
 		controller_ListEmployee(pArrayListEmployee);
-		printf("Empleados ordenados por Nombre!!\n");
 		retorno = 0;
 	}
 	else
@@ -286,10 +284,8 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 			if(bEmpleado!=NULL)
 			{
 				bEmpleado = ll_get(pArrayListEmployee,i);
-				printf("len %d",lenLL);
 				fwrite(bEmpleado,sizeof(Employee),1,pFile);
 				retorno = 0;
-				emp_printAemployee(bEmpleado);
 			}
 			else
 				break;
