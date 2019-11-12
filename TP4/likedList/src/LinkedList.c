@@ -126,7 +126,6 @@ static int addNode(LinkedList* this, int nodeIndex,void* pElement)
 		pNodo = node_new();
 		if(pNodo == NULL) return -1;
 
-
 		returnAux = 0;
 		this->size++;
 		pNodo->pElement = pElement;
@@ -254,7 +253,7 @@ int ll_remove(LinkedList* this,int index)
 			pNodeDelete = getNode(this,index);//busco el nodo a borrar
 			pNodePosterior = getNode(this,index+1);
 			this->pFirstNode = pNodePosterior;
-//			node_delete(pNodeDelete);
+			node_delete(pNodeDelete);// VA O NO? FUNCIONA DE LAS 2 MANERAS
 		}
 		else
 		{
@@ -421,8 +420,11 @@ void* ll_pop(LinkedList* this,int index)
     if(this!=NULL && index>=0 && index < this->size)
     {
     	pNode = getNode(this,index);
-    	returnAux = pNode;
-       	ll_remove(this,index);
+    	returnAux = pNode->pElement;
+    	this->size--;
+    	node_delete(pNode);
+//    	ll_remove(this,index); XQ NO ANDA CON REMOVE?
+
     }
     return returnAux;
 }
@@ -438,11 +440,25 @@ void* ll_pop(LinkedList* this,int index)
 */
 int ll_contains(LinkedList* this, void* pElement)
 {
-    int returnAux = -1;
+	int returnAux = -1;
+	int i;
+	Node* pNode;
 
-    return returnAux;
+	if(this!=NULL)
+	{
+		returnAux = 0;
+		for(i=0;i<ll_len(this);i++)
+		{
+			pNode = getNode(this,i);
+			if(pNode->pElement == pElement)
+			{
+				returnAux = 1;
+				break;
+			}
+		}
+	}
+	return returnAux;
 }
-
 /** \brief  Determina si todos los elementos de la lista (this2)
             estan contenidos en la lista (this)
  *
@@ -454,9 +470,28 @@ int ll_contains(LinkedList* this, void* pElement)
 */
 int ll_containsAll(LinkedList* this,LinkedList* this2)
 {
-    int returnAux = -1;
+	int returnAux = -1;
+	int i;
+	Node* pNode1;
 
-    return returnAux;
+	if(this!=NULL && this2!=NULL)
+	{
+		returnAux = 0;
+		for(i=0;i<ll_len(this2);i++)
+		{
+			pNode1 = getNode(this2,i);
+			if(ll_contains(this,pNode1->pElement)==1)
+			{
+				returnAux = 1;
+			}
+			else
+			{
+				returnAux = 0;
+				break;
+			}
+		}
+	}
+	return returnAux;
 }
 
 /** \brief Crea y retorna una nueva lista con los elementos indicados
@@ -472,7 +507,19 @@ int ll_containsAll(LinkedList* this,LinkedList* this2)
 LinkedList* ll_subList(LinkedList* this,int from,int to)
 {
     LinkedList* cloneArray = NULL;
+    int lenll = ll_len(this);
+    int i;
+    Node* pNode;
 
+    if(this!=NULL && from>=0 && from<=lenll && to>=from && to<=lenll)
+    {
+    	cloneArray = ll_newLinkedList();
+    	for(i=from;i<to;i++)
+    	{
+    		pNode = ll_get(this,i);
+    		ll_add(cloneArray,pNode);
+    	}
+    }
     return cloneArray;
 }
 
@@ -487,10 +534,21 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
 LinkedList* ll_clone(LinkedList* this)
 {
     LinkedList* cloneArray = NULL;
+    int lenll = ll_len(this);
+    int i;
+    Node* pNode;
 
+    if(this!=NULL && lenll>0)
+    {
+    	cloneArray = ll_newLinkedList();
+    	for(i=0;i<lenll;i++)
+    	{
+    		pNode = ll_get(this,i);
+    		ll_add(cloneArray,pNode);
+    	}
+    }
     return cloneArray;
 }
-
 
 /** \brief Ordena los elementos de la lista utilizando la funcion criterio recibida como parametro
  * \param pList LinkedList* Puntero a la lista
@@ -502,9 +560,45 @@ LinkedList* ll_clone(LinkedList* this)
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 {
     int returnAux =-1;
+    Node* pNode1;
+    Node* pNode2;
+    Node* pNodeBuffer;
+    int i;
+    int j;
+    int llLen = ll_len(this);
 
+    if(this!=NULL && pFunc!=NULL && order>=0 && order <=1)
+    {
+    	for(i=0;i<llLen;i++)
+    	{
+    		pNode1 = ll_get(this,i);//tomo el 1er elemento de la lista
+
+    		for(j=i+1;j<llLen;j++)//itero sobre el resto de la lista para comparar el elemento pnodo 1 contra el resto de los elementos de la lista
+    		{
+    			pNode2 = ll_get(this,j); //tomo el 2do elemento de la lista en el 1er caso,despues se va corriendo +1
+    			if(order==0)//si el orden es descendente
+    			{
+    				if(pFunc(pNode1,pNode2)<0)//si la f criterio me dice que pnodo1 es menor a pnodo 2, hago el swap para q el mas alto quede 1ro
+    				{
+    					pNodeBuffer = pNode2;//el 2do(mas alto) va al buffer
+    					pNode2 = pNode1;//el 1 va al 2
+    					pNode1 = pNodeBuffer;//el buffer(que era el 2) va al 1
+    				}
+    			}
+    			else if(pFunc(pNode1,pNode2)>0)// el unico otro caso es que order sea desc
+    				//si la f criterio me dice que pnodo1 es mayor a pnodo 2, hago el swap, para que quede el mas bajo(pnodo 2 en este caso), 1ro
+    			{
+    				pNodeBuffer = pNode1;
+    				pNode1 = pNode2;
+    				pNode2 = pNodeBuffer;
+    			}
+    			ll_set(this,i,pNode1);//hago el set para asentar las modificaciones
+    			ll_set(this,j,pNode2);
+    		}
+    	}
+    	returnAux = 0;
+    }
     return returnAux;
-
 }
 
 
