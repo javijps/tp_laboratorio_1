@@ -51,25 +51,16 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	if(pFile!=NULL)
 	{
 		if(pArrayListEmployee!=NULL &&
-				ll_len(pArrayListEmployee)==0 &&
-				parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
+		   ll_len(pArrayListEmployee)==0 &&
+		   parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
 		{
 			retorno = 0;
 			printf("Archivo cargado!\n");
 		}
+
+		fclose(pFile);
 	}
-	if(pFile==NULL)
-	{
-		pFile = fopen(path,"wb");
-		if(pFile!=NULL)
-		{
-			printf("Archivo creado!\n");
-			retorno = 0;
-		}
-		else
-			printf("NO fue posible abrir el archivo!\n");
-	}
-	fclose(pFile);
+
 	return retorno;
 }
 /** \brief Alta de empleados
@@ -272,25 +263,22 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	int i;
 	Employee* bEmpleado;
 
-	pFile = fopen(path,"rb");
+	pFile = fopen(path,"wb");
 	lenLL = ll_len(pArrayListEmployee);
 
 	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
 	{
-		pFile = fopen(path,"wb");
 		for(i=0;i<lenLL;i++)
 		{
-			bEmpleado = employee_new();
+			bEmpleado = ll_get(pArrayListEmployee,i);
+
 			if(bEmpleado!=NULL)
 			{
-				bEmpleado = ll_get(pArrayListEmployee,i);
 				fwrite(bEmpleado,sizeof(Employee),1,pFile);
 				retorno = 0;
 			}
-			else
-				break;
-			printf("Informacion guardada!\n");
 		}
+		printf("Informacion guardada!\n");
 		fclose(pFile);
 	}
 	else

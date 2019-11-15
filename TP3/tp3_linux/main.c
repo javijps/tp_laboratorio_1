@@ -76,10 +76,10 @@ int main()
 					controller_saveAsText("data.csv",listaEmpleados);
 				break;
 			case 9:
-				if(flagBinario==0)
-					printf("No es posible guardar el archivo en modo binario si no se abrio un archivo de ese tipo!\n");
-				else
-					controller_saveAsBinary("data.csv",listaEmpleados);
+//				if(flagBinario==0)
+//					printf("No es posible guardar el archivo en modo binario si no se abrio un archivo de ese tipo!\n");
+//				else
+					controller_saveAsBinary("data.bin",listaEmpleados);
 				break;
 			case 10:
 				if(controller_exitMenu(listaEmpleados)==0)

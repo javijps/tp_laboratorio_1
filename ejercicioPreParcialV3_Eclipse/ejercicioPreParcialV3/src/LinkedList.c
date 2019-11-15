@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/LinkedList.h"
+#include "LinkedList.h"
 
 
 static Node* getNode(LinkedList* this, int nodeIndex);
@@ -578,14 +578,14 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     			pNode2 = ll_get(this,j); //tomo el 2do elemento de la lista en el 1er caso,despues se va corriendo +1
     			if(order==0)//si el orden es descendente
     			{
-    				if(pFunc(pNode1,pNode2)==-1)//<0)//si la f criterio me dice que pnodo1 es menor a pnodo 2, hago el swap para q el mas alto quede 1ro
+    				if(pFunc(pNode1,pNode2)<0)//si la f criterio me dice que pnodo1 es menor a pnodo 2, hago el swap para q el mas alto quede 1ro
     				{
     					pNodeBuffer = pNode2;//el 2do(mas alto) va al buffer
     					pNode2 = pNode1;//el 1 va al 2
     					pNode1 = pNodeBuffer;//el buffer(que era el 2) va al 1
     				}
     			}
-    			else if(pFunc(pNode1,pNode2)==1)//>0)// el unico otro caso es que order sea desc
+    			else if(pFunc(pNode1,pNode2)>0)// el unico otro caso es que order sea desc
     				//si la f criterio me dice que pnodo1 es mayor a pnodo 2, hago el swap, para que quede el mas bajo(pnodo 2 en este caso), 1ro
     			{
     				pNodeBuffer = pNode1;
@@ -662,13 +662,12 @@ LinkedList* ll_reduce(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio 
     	for(i=0;i<llLen;i++)
     	{
     		pNode = ll_get(this,i);
-	 		criterio = pFunc(pNode);
+	 		criterio = pFunc(pNode);//imprimir un elemento
     		if(criterio ==0)//no cumple el requisito
     		{
     			ll_remove(this,i);
-    			this->size--;
     			i--;
-    			//llLen--;
+    			llLen--;
     		}
     	}
     }
