@@ -1,13 +1,15 @@
 /*
  ============================================================================
- Name        : TP4usoll.c
+ Name        : TP4_uso_ll.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-
+//PROBAR POP CON REMOVE EN EL TP4 TEST.
+//PROBAR REDUCE CON LA REDUCCION DE SIZE
+//PROBAR EN EL TP4 TEST, SI GETNODE ANDA IGUAL PONIENDO <=LEN(SIZE
 #include <stdio.h>
 #include <stdlib.h>
 #include "LinkedList.h"
@@ -53,18 +55,16 @@ int main()
 			switch(option)
 			{
 			case 1:
-				if(flagBinario!=0)
-					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
+				if(flagBinario==0 && controller_loadFromText("data.csv",listaEmpleados)==0)
+					flagTexto =1;
 				else
-					if(controller_loadFromText("data.csv",listaEmpleados)==0)
-						flagTexto =1;
+					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
 				break;
 			case 2:
-				if(flagTexto!=0)
-					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");
+				if(flagBinario==0 && controller_loadFromBinary("data.bin",listaEmpleados)==0)
+						flagBinario = 1;
 				else
-					if(controller_loadFromBinary("data.bin",listaEmpleados)==0)
-						flagBinario =1;
+					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");
 				break;
 			case 3:
 				controller_addEmployee(listaEmpleados);
@@ -82,16 +82,10 @@ int main()
 				controller_sortEmployee(listaEmpleados);
 				break;
 			case 8:
-				if(flagTexto==0)
-					printf("No es posible guardar el archivo en modo texto si no se abrio un archivo de ese tipo!\n");
-				else
-					controller_saveAsText("data.csv",listaEmpleados);
+				controller_saveAsText("data.csv",listaEmpleados);
 				break;
 			case 9:
-				if(flagBinario==0)
-					printf("No es posible guardar el archivo en modo binario si no se abrio un archivo de ese tipo!\n");
-				else
-					controller_saveAsBinary("data.bin",listaEmpleados);
+				controller_saveAsBinary("data.bin",listaEmpleados);
 				break;
 			case 10:
 				if(controller_exitMenu(listaEmpleados)==0)

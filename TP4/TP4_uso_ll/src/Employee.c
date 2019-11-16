@@ -336,6 +336,7 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 	Employee* bEmployee = NULL;
 
 	lenLlARray = ll_len(pArrayListEmployee);
+	printf("largo array %d",lenLlARray);
 	if(pArrayListEmployee!=NULL && lenLlARray>0 && idEmployee>0)
 	{
 		for(i=0;i<lenLlARray;i++)
@@ -345,7 +346,7 @@ Employee* emp_findEmployeeById(LinkedList* pArrayListEmployee,int idEmployee)
 			{
 				emp_printAemployee(bEmployee);
 				return bEmployee;
-				break;//es necesario?
+				break;
 			}
 		}
 	}
@@ -597,7 +598,6 @@ int employee_deleteEmployee(LinkedList* pArrayListEmployee)
 	if(pArrayListEmployee!=NULL)
 	{
 		controller_ListEmployee(pArrayListEmployee);
-		//getID
 		if(getInt(&bId,"Ingrese ID del Empleado a eliminar\n","Error Id invalido!\n",1,10000,2)==0)
 		{
 			if(getInt(&option,"\nConfirma que desea borrar este empleado?\n"
@@ -611,8 +611,9 @@ int employee_deleteEmployee(LinkedList* pArrayListEmployee)
 					indexEmpleado = ll_indexOf(pArrayListEmployee,bEmpleado);
 					ll_remove(pArrayListEmployee,indexEmpleado);
 					retorno = 0;
-					printf("El empleado ha sido eliminado!\n");
 				}
+				else
+					printf("empleado null\n");
 			}
 			else
 				printf("Operacion cancelada!\n");

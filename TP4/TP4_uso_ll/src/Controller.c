@@ -21,8 +21,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)//MENSAJ
 	FILE* pFile;
 	pFile = fopen(path,"r");
 
-	if(pFile!=NULL
-			&&
+	if(pFile!=NULL &&
 			pArrayListEmployee!=NULL &&
 			ll_len(pArrayListEmployee)==0 &&
 			parser_EmployeeFromText(pFile,pArrayListEmployee)==0)
@@ -52,25 +51,17 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	if(pFile!=NULL)
 	{
 		if(pArrayListEmployee!=NULL &&
-				ll_len(pArrayListEmployee)==0 &&
-				parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
+		   ll_len(pArrayListEmployee)==0 &&
+		   parser_EmployeeFromBinary(pFile,pArrayListEmployee)==0)
 		{
 			retorno = 0;
 			printf("Archivo cargado!\n");
 		}
+		fclose(pFile);
 	}
-	if(pFile==NULL)
-	{
-		pFile = fopen(path,"wb");
-		if(pFile!=NULL)
-		{
-			printf("Archivo creado!\n");
-			retorno = 0;
-		}
-		else
-			printf("NO fue posible abrir el archivo!\n");
-	}
-	fclose(pFile);
+	else
+		printf("Archivo inexistente!\n");
+
 	return retorno;
 }
 /** \brief Alta de empleados
@@ -144,7 +135,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 	int retorno=-1;
 
 	if(pArrayListEmployee!=NULL &&
-			ll_len(pArrayListEmployee)>0)
+	   ll_len(pArrayListEmployee)>0)
 	{
 		if(employee_deleteEmployee(pArrayListEmployee)==0)
 		{
@@ -278,13 +269,17 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 
 	if(pFile!=NULL && pArrayListEmployee!=NULL && lenLL>0)
 	{
-		//		pFile = fopen(path,"wb");
 		for(i=0;i<lenLL;i++)
 		{
 			bEmpleado = ll_get(pArrayListEmployee,i);
-			fwrite(bEmpleado,sizeof(Employee),1,pFile);
+
+			if(bEmpleado!=NULL)
+			{
+				fwrite(bEmpleado,sizeof(Employee),1,pFile);
+				retorno = 0;
+			}
 		}
-		retorno = 0;
+		printf("Informacion guardada!\n");
 		fclose(pFile);
 	}
 	else
