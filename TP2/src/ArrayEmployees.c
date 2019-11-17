@@ -67,23 +67,23 @@ int getDatosEmployee(Employee* list,int len){
 
 	int retorno = -1;
 	Employee bEmpleado;
-	int i;
+	int i = findEmptyEmployee(list,len);
 
-	for(i=0;i<len;i++)
-	{
+//	for(i=0;i<len;i++)
+//	{
 
 		if(getNombre(bEmpleado.name,MAX_CHAR,2)!=0)
-			break;
+			return retorno;
 		if(getApellido(bEmpleado.lastName,MAX_CHAR,2)!=0)
-			break;
+			return retorno;
 		if(getFloat(&bEmpleado.salary,"Ingrese salario del empleado\n",
 				"Error, el salario ingresado es incorrecto\n",
 				1,MAX_SALARY,2)!=0)
-			break;
+			return retorno;
 		if(getInt(&bEmpleado.sector,"Ingrese sector 1 a 10\n",
 				"Error, el sector ingresado es incorrecto\n",
 				1,10,3)!=0)
-			break;
+			return retorno;
 
 		list[i].salary = bEmpleado.salary;
 		list[i].sector = bEmpleado.sector;
@@ -92,7 +92,8 @@ int getDatosEmployee(Employee* list,int len){
 		list[i].isEmpty = STATUS_NOT_EMPTY;
 		list[i].id = idEmployee();
 		retorno = 0;
-	}
+
+//	}
 	return retorno;
 }
 
@@ -126,9 +127,8 @@ int findEmployeeById(Employee* list, int len,int id)
 /** \brief find an Empty Employee and returns the index position in array.
 * \param list Employee* puntero a un array de empleados
 * \param len int Array length
-* \param id int id correspondiente a un empleado
 * \return Return employee index position or (-1) if [Invalid length or NULL
-pointer received or employee not found]
+pointer received or space not found]
 *
 */
 int findEmptyEmployee(Employee* list,int len)
@@ -141,7 +141,10 @@ int findEmptyEmployee(Employee* list,int len)
 		for(i=0;i<len;i++)
 		{
 			if(list[i].isEmpty==STATUS_EMPTY)
-				return i;
+			{
+				retorno =  i;
+				break;
+			}
 		}
 	}
 	return retorno;
@@ -165,14 +168,14 @@ int addEmployee(Employee* list,int len)
 {
 	int respuesta;
 	int retorno = -1;
-	int index=0;
+	int index;
 
 	do
 	{
 		if(list != NULL && len>0)
 		{
-			index = findEmptyEmployee(list,len);
 
+			index = findEmptyEmployee(list,len);
 			if(index!=-1)
 			{
 				if(getDatosEmployee(list,len)==0)
@@ -183,7 +186,11 @@ int addEmployee(Employee* list,int len)
 					printf("No fue posible realizar el alta!\n");
 			}
 		}
-		getInt(&respuesta,"Desea Ingresar otro empleado?\nIngrese 1\nPara finalizar\nIngrese 2\n","Error,respuesta Incorrecta\n",1,2,2);
+		getInt(&respuesta,"Desea Ingresar otro empleado?\nIngrese 1 para continuar\nIngrese 2 para finalizar\n",
+				"Error,respuesta Incorrecta\n",
+				1,
+				2,
+				2);
 	}while(respuesta==1);
 
 	return retorno;
@@ -247,12 +254,12 @@ int sortEmployees(Employee* list, int len, int order)
 				fSwap=0;
 				for(i=0;i<len-1;i++)
 				{
+					if(list[i].isEmpty==STATUS_EMPTY)
+						continue;
 					if(order==1)
 					{
 						if(strncmp(list[i].lastName,list[i+1].lastName,50)>0)
 						{
-							if(list[i].isEmpty==STATUS_EMPTY)
-								continue;
 							fSwap = 1;
 							bEmployee = list[i];
 							list[i] = list[i+1];
@@ -301,6 +308,7 @@ int sortEmployees(Employee* list, int len, int order)
 			}while(fSwap);
 
 	}
+	printEmployees(list,len);
 	return retorno;
 }
 
@@ -356,7 +364,7 @@ int modifyEmployeeById(Employee* list,int len,int id)
 			getChar(&option,"a-Modificar nombre\n"
 					"b-Modificar apellido\n"
 					"c-Modificar salario\n"
-					"d-MOdificar sector\n"
+					"d-Modificar sector\n"
 					"e-SALIR\n",
 					"Error,opcion incorrecta\n",
 					'a','e',2);
@@ -408,7 +416,7 @@ int modifyEmployeeById(Employee* list,int len,int id)
 			case 'd':
 				if(getInt(&bEmployee.sector,"Ingrese el sector del empleado\n",
 						"Sector Incorrecto\n",
-						1,3,2)!=0)
+						1,10,2)!=0)
 				{
 					printf("No se pudo modificar el sector");
 					retorno = -1;

@@ -422,9 +422,7 @@ void* ll_pop(LinkedList* this,int index)
     	pNode = getNode(this,index);
     	returnAux = pNode->pElement;
     	this->size--;
-    	node_delete(pNode);
-//    	ll_remove(this,index); XQ NO ANDA CON REMOVE?
-
+    	ll_remove(this,index);
     }
     return returnAux;
 }

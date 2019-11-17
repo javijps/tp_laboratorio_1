@@ -7,7 +7,6 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-//PROBAR POP CON REMOVE EN EL TP4 TEST.
 //PROBAR REDUCE CON LA REDUCCION DE SIZE
 //PROBAR EN EL TP4 TEST, SI GETNODE ANDA IGUAL PONIENDO <=LEN(SIZE
 #include <stdio.h>
