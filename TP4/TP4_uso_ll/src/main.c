@@ -7,8 +7,6 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-//PROBAR REDUCE CON LA REDUCCION DE SIZE
-//PROBAR EN EL TP4 TEST, SI GETNODE ANDA IGUAL PONIENDO <=LEN(SIZE
 #include <stdio.h>
 #include <stdlib.h>
 #include "LinkedList.h"
@@ -60,7 +58,7 @@ int main()
 					printf("No es posible abrir el archivo en modo texto si se abrio un archivo en modo binario!\n");
 				break;
 			case 2:
-				if(flagBinario==0 && controller_loadFromBinary("data.bin",listaEmpleados)==0)
+				if(flagTexto==0 && controller_loadFromBinary("data.bin",listaEmpleados)==0)
 						flagBinario = 1;
 				else
 					printf("No es posible abrir el archivo en modo binario si se abrio un archivo en modo texto!\n");

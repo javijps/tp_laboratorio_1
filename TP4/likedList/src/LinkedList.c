@@ -80,15 +80,14 @@ int ll_len(LinkedList* this)
 static Node* getNode(LinkedList* this, int nodeIndex)
 {
 	Node* pNode = NULL;//buffer
-	int i;//variable de control.
+	int i;
 
-	if(this!=NULL && nodeIndex>=0 && nodeIndex<this->size)//chequeo q la lista no sea null, q el index sea mayor a 0 y menor al tamaño de la lista
+	if(this!=NULL && nodeIndex>=0 && nodeIndex<this->size)
 	{
-		pNode = this->pFirstNode;//asigna al buffer la direccion de memoria del 1er nodo de la lista.
-		for(i=0;i<nodeIndex;i++)//recorre de nodo en nodo,hasta la posicion del nodo indicado
+		pNode = this->pFirstNode;
+		for(i=0;i<nodeIndex;i++)
 		{
-			pNode = pNode->pNextNode;//iguala en cada iteracion con la direccion de memoria del nodo siguiente.
-			                         //cuando llegue a la direccion anterior a la del nodo indicado, va a devolver la direccion del siguiente, que seria el buscado
+			pNode = pNode->pNextNode;
 		}
 	}
 	return pNode;
@@ -250,10 +249,10 @@ int ll_remove(LinkedList* this,int index)
 
 		if(index==0)
 		{
-			pNodeDelete = getNode(this,index);//busco el nodo a borrar
+			pNodeDelete = getNode(this,index);
 			pNodePosterior = getNode(this,index+1);
 			this->pFirstNode = pNodePosterior;
-			node_delete(pNodeDelete);// VA O NO? FUNCIONA DE LAS 2 MANERAS
+			node_delete(pNodeDelete);
 		}
 		else
 		{
@@ -569,28 +568,26 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     {
     	for(i=0;i<llLen;i++)
     	{
-    		pNode1 = ll_get(this,i);//tomo el 1er elemento de la lista
+    		pNode1 = ll_get(this,i);
 
-    		for(j=i+1;j<llLen;j++)//itero sobre el resto de la lista para comparar el elemento pnodo 1 contra el resto de los elementos de la lista
+    		for(j=i+1;j<llLen;j++)
     		{
-    			pNode2 = ll_get(this,j); //tomo el 2do elemento de la lista en el 1er caso,despues se va corriendo +1
-    			if(order==0)//si el orden es descendente
+    			pNode2 = ll_get(this,j);
+    			if(order==0)
     			{
-    				if(pFunc(pNode1,pNode2)==-1)//<0)//si la f criterio me dice que pnodo1 es menor a pnodo 2, hago el swap para q el mas alto quede 1ro
+    				if(pFunc(pNode1,pNode2)==-1)
     				{
-    					pNodeBuffer = pNode2;//el 2do(mas alto) va al buffer
-    					pNode2 = pNode1;//el 1 va al 2
-    					pNode1 = pNodeBuffer;//el buffer(que era el 2) va al 1
+    					pNodeBuffer = pNode2;
+    					pNode2 = pNode1;
+    					pNode1 = pNodeBuffer;
     				}
     			}
-    			else if(pFunc(pNode1,pNode2)==1)//>0)// el unico otro caso es que order sea desc
-    				//si la f criterio me dice que pnodo1 es mayor a pnodo 2, hago el swap, para que quede el mas bajo(pnodo 2 en este caso), 1ro
-    			{
+    			else if(pFunc(pNode1,pNode2)==1) 			{
     				pNodeBuffer = pNode1;
     				pNode1 = pNode2;
     				pNode2 = pNodeBuffer;
     			}
-    			ll_set(this,i,pNode1);//hago el set para asentar las modificaciones
+    			ll_set(this,i,pNode1);
     			ll_set(this,j,pNode2);
     		}
     	}
@@ -598,6 +595,15 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     }
     return returnAux;
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -613,7 +619,7 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
     	for(i=0;i<llLen;i++)
     	{
     		pNode1 = ll_get(this,i);
-    		pFunc(pNode1);//imprimir un elemento
+    		pFunc(pNode1);
     		ll_set(this,i,pNode1);
     	}
     	returnAux = 0;
@@ -624,7 +630,7 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
 
 
 
-LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio -1 no
+LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))
 {
 	int criterio;
 	LinkedList* cloneArray=NULL;
@@ -638,7 +644,7 @@ LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio 
     	for(i=0;i<llLen;i++)
     	{
     		pNode = ll_get(this,i);
-    		criterio = pFunc(pNode);//imprimir un elemento
+    		criterio = pFunc(pNode);
     		if(criterio ==1)
     		{
     			ll_add(cloneArray,pNode);
@@ -666,227 +672,8 @@ LinkedList* ll_reduce(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio 
     			ll_remove(this,i);
     			this->size--;
     			i--;
-    			//llLen--;
     		}
     	}
     }
     return this;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*PRUEBA CON TP 3
-
-
-
-
-
-
-
-
-void emp_printAemployeeIdMap(void* employee)
-{
-	int bEmployee_id = ((Employee*)employee)->id;
-
-	if(employee!=NULL)
-	{
-		printf("\nID: %d\n",
-				bEmployee_id);
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-int emp_filterEmployeeById(void* employee)
-{
-	int bEmployee_id = ((Employee*)employee)->id;
-
-	if(bEmployee_id>=950 && bEmployee_id<=1000)
-	{
-		return 1;
-	}
-	else
-		return 0;
-
-	return -1;
-}
-
-
-
-int ll_map(LinkedList* this, void (*pFunc)(void*))
-{
-    int returnAux =-1;
-    Node* pNode1;
-    int i;
-    int llLen = ll_len(this);
-
-    if(this!=NULL && pFunc!=NULL)
-    {
-    	for(i=0;i<llLen;i++)
-    	{
-    		pNode1 = ll_get(this,i);
-    		pFunc(pNode1);//imprimir un elemento
-    		ll_set(this,i,pNode1);
-    	}
-    	returnAux = 0;
-    }
-    return returnAux;
-}
-
-
-
-
-LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio -1 no
-{
-	int criterio;
-	LinkedList* cloneArray=NULL;
-    Node* pNode;
-    int i;
-    int llLen = ll_len(this);
-
-    if(this!=NULL && pFunc!=NULL)
-    {
-		cloneArray = ll_newLinkedList();
-    	for(i=0;i<llLen;i++)
-    	{
-    		pNode = ll_get(this,i);
-    		criterio = pFunc(pNode);//imprimir un elemento
-    		if(criterio ==1)
-    		{
-    			ll_add(cloneArray,pNode);
-    		}
-    	}
-    }
-    return cloneArray;
-}
-
-
-
-LinkedList* ll_reduce(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio -1 no
-{
-	int criterio;
-    Node* pNode;
-    int i;
-    int llLen = ll_len(this);
-
-    if(this!=NULL && pFunc!=NULL)
-    {
-    	for(i=0;i<llLen;i++)
-    	{
-    		pNode = ll_get(this,i);
-	 		criterio = pFunc(pNode);//imprimir un elemento
-    		if(criterio ==0)//no cumple el requisito
-    		{
-    			ll_remove(this,i);
-    			i--;
-    			llLen--;
-    		}
-    	}
-    }
-    return this;
-}
-
-
-
-int controller_pruebaReduce(LinkedList* pArrayListEmployee)
-{
-	int retorno=-1;
-	int lenLL;
-
-	lenLL = ll_len(pArrayListEmployee);
-	if(pArrayListEmployee!=NULL && lenLL>0)
-	{
-
-		pArrayListEmployee = ll_reduce(pArrayListEmployee,emp_filterEmployeeById);//1 y 0 desc
-		if(pArrayListEmployee!=NULL)
-		{
-			printf("Lista reducida(criterio id entre 950 y 1000!\n");
-			retorno = 0;
-		}
-	}
-	else
-	{
-		printf("No existen datos cargados a filtrar!\n");
-	}
-	return retorno;
-}
-
-
-
-
-
-
-
-
-
-
-int controller_pruebaMap(LinkedList* pArrayListEmployee)
-{
-	int retorno=-1;
-	int lenLL;
-
-	lenLL = ll_len(pArrayListEmployee);
-	if(pArrayListEmployee!=NULL && lenLL>0)
-	{
-		ll_map(pArrayListEmployee,emp_printAemployeeIdMap);//1asc y 0 desc
-		retorno = 0;
-	}
-	else
-	{
-		printf("No existen datos cargados a mapear!\n");
-	}
-	return retorno;
-}
-
-
-
-int controller_pruebaFilter(LinkedList* pArrayListEmployee)
-{
-	LinkedList* lista_Filtrada = NULL;
-	int retorno=-1;
-	int lenLL;
-
-	lenLL = ll_len(pArrayListEmployee);
-	if(pArrayListEmployee!=NULL && lenLL>0)
-	{
-		lista_Filtrada = ll_filter(pArrayListEmployee,emp_filterEmployeeById);//1 y 0 desc
-		if(lista_Filtrada!=NULL)
-		{
-			controller_ListEmployee(lista_Filtrada);
-			retorno = 0;
-		}
-	}
-	else
-	{
-		printf("No existen datos cargados a filtrar!\n");
-	}
-	return retorno;
-}
-
-
-
-
-
-
-*/
-
-
-
