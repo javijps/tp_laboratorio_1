@@ -69,12 +69,9 @@ int getDatosEmployee(Employee* list,int len){
 	Employee bEmpleado;
 	int i = findEmptyEmployee(list,len);
 
-//	for(i=0;i<len;i++)
-//	{
-
-		if(getNombre(bEmpleado.name,MAX_CHAR,2)!=0)
+		if(getNombre(bEmpleado.name,"Ingrese nombre\n","El nombre ingresado es incorrecto\n",2)!=0)
 			return retorno;
-		if(getApellido(bEmpleado.lastName,MAX_CHAR,2)!=0)
+		if(getNombre(bEmpleado.lastName,"Ingrese apellido\n","El apellido ingresado es incorrecto\n",2)!=0)
 			return retorno;
 		if(getFloat(&bEmpleado.salary,"Ingrese salario del empleado\n",
 				"Error, el salario ingresado es incorrecto\n",
@@ -93,7 +90,6 @@ int getDatosEmployee(Employee* list,int len){
 		list[i].id = idEmployee();
 		retorno = 0;
 
-//	}
 	return retorno;
 }
 
@@ -372,9 +368,9 @@ int modifyEmployeeById(Employee* list,int len,int id)
 			switch(option)
 			{
 			case 'a':
-				if(getString(bEmployee.name,"Ingrese el nombre del empleado\n",
+				if(getNombre(bEmployee.name,"Ingrese el nombre del empleado\n",
 						"Nombre Incorrecto\n",
-						1,49,3)!=0)
+						 3)!=0)
 				{
 					printf("No se pudo modificar el nombre");
 					retorno = -1;
@@ -386,9 +382,9 @@ int modifyEmployeeById(Employee* list,int len,int id)
 				}
 				break;
 			case 'b':
-				if(getString(bEmployee.lastName,"Ingrese el apellido del empleado\n",
+				if(getNombre(bEmployee.lastName,"Ingrese el apellido del empleado\n",
 						"Apellido Incorrecto\n",
-						1,49,3)!=0)
+						3)!=0)
 				{
 					printf("No se pudo modificar el apellido");
 					retorno = -1;

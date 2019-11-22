@@ -38,7 +38,7 @@ int getString(char *pResultado,
 			  int reintentos);
 int esNumerica(char *cadena);
 
-int getNombre(char pNombre[50],int limite,int reintentos);
+int getNombre(char *pNombre,char *pMensaje,char *pMensajeError,int reintentos);
 int esNombre(char pNombre[50]);
 int getApellido(char pApellido[50],int limite,int reintentos);
 int esApellido(char pApellido[50]);

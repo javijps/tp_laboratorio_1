@@ -322,7 +322,7 @@ int esNombre(char pNombre[50])
 			}
 			else
 			{
-				printf("Error, los datos ingresados no corresponden a un nombre!!\n");
+				printf("Error, los datos ingresados son incorrectos!!\n");
 				break;
 			}
 		}
@@ -332,27 +332,29 @@ int esNombre(char pNombre[50])
 /**
 * \brief Solicita nombre al usuario.
 * \param pNombre Se carga el nombre ingresado.
-* \param limite. tamaño del array
 * \param reintentos cantidad de errores permitidos
 * \return Si tuvo exito al obtener el nombre [0] o si fallo [-1]
 */
-int getNombre(char pNombre[49],int limite,int reintentos)
+int getNombre(char *pNombre,char *pMensaje,char *pMensajeError,int reintentos)
 {
 	int retorno=-1;
-
-	do
+	if(pNombre != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
 	{
-		getString(pNombre,"Ingrese nombre\n","El nombre ingresado es incorrecto\n",1,49,3);
-		if(esNombre(pNombre)==0)
+		do
 		{
-			retorno = 0;
-			break;
-		}
-		else
-			reintentos--;
-
-	}while(reintentos>0);
-
+			getString(pNombre,pMensaje,pMensajeError,1,49,3);
+			if(esNombre(pNombre)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}while(reintentos>0);
+	}
 	return retorno;
 }
 
